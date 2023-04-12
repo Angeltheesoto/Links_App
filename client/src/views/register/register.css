@@ -1,0 +1,24 @@
+.registerContainer {
+  display: flex;
+  height: calc(100vh - 56px);
+}
+
+.labelContainer {
+  background-color: rgba(103, 164, 205, 0.626);
+  padding: 1rem;
+  border-radius: 10px;
+}
+
+.registerForm {
+  display: flex;
+  flex-flow: column;
+  margin: 0 auto;
+  width: 30rem;
+  justify-content: center;
+}
+
+.registerForm label {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 1rem;
+}

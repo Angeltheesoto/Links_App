@@ -1,16 +1,18 @@
 // dependencies
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, redirect } from "react-router-dom";
 import axios from "axios";
 
 // components
 import { Container } from "react-bootstrap";
 import MyNavbar from "./components/nav/Nav";
-import LandingPage from "./views/landingpage/LandingPage";
+import Register from "./views/register/Register";
+import Login from "./views/login/Login";
 import EducationPage from "./views/education/EducationPage";
 import WorkPage from "./views/work/WorkPage";
 import PortfolioPage from "./views/portfolio/PortfolioPage";
+import { AuthContext } from "./context/AuthContext";
 
 function App() {
   // ?fetch data ----------------------->>>>
@@ -51,7 +53,9 @@ function App() {
     };
     requests();
   }, []);
+
   // ?fetch data ----------------------->>>>
+  const { user } = useContext(AuthContext);
 
   return (
     <div className="App">
@@ -60,7 +64,13 @@ function App() {
           <MyNavbar />
           <Container>
             <Routes>
-              <Route path="/" element={<LandingPage />} />
+              <Route path="/" element={user ? <h1>Home</h1> : <Register />} />
+              <Route path="/login" element={user ? <h1>Home</h1> : <Login />} />
+              <Route
+                path="/register"
+                element={user ? <h1>Home</h1> : <Register />}
+              />
+
               <Route
                 path="/education"
                 element={<EducationPage educationData={education} />}
