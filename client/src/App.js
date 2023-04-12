@@ -13,6 +13,7 @@ import EducationPage from "./views/education/EducationPage";
 import WorkPage from "./views/work/WorkPage";
 import PortfolioPage from "./views/portfolio/PortfolioPage";
 import { AuthContext } from "./context/AuthContext";
+import Home from "./views/home/Home";
 
 function App() {
   // ?fetch data ----------------------->>>>
@@ -64,11 +65,11 @@ function App() {
           <MyNavbar />
           <Container>
             <Routes>
-              <Route path="/" element={user ? <h1>Home</h1> : <Register />} />
-              <Route path="/login" element={user ? <h1>Home</h1> : <Login />} />
+              <Route path="/" element={user ? <Home /> : <Register />} />
+              <Route path="/login" element={user ? <Home /> : <Login />} />
               <Route
                 path="/register"
-                element={user ? <h1>Home</h1> : <Register />}
+                element={user ? <Home /> : <Register />}
               />
 
               <Route

@@ -1,7 +1,15 @@
+import { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../context/AuthContext";
+import { logoutCall } from "../../apiCalls";
 
-function MyNavbar() {
+function MyNavbar({ user }) {
+  const { user: currentUser, dispatch } = useContext(AuthContext);
+  const logOut = () => {
+    logoutCall(dispatch);
+  };
+
   return (
     <Navbar bg="dark" variant="dark" expand="lg">
       <Container>
@@ -23,6 +31,13 @@ function MyNavbar() {
             <Link to="/portfolio" className="nav-link">
               <Nav>Portfolio</Nav>
             </Link>
+            {currentUser ? (
+              <Link to={"/login"} style={{ textDecoration: "none" }}>
+                <button onClick={logOut}>
+                  <p>Log out</p>
+                </button>
+              </Link>
+            ) : null}
           </Nav>
         </Navbar.Collapse>
       </Container>

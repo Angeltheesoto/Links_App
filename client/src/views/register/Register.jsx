@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { loginCall } from "../../apiCalls";
 import { AuthContext } from "../../context/AuthContext";
+// import { useNavigate } from "react-router-dom";
 
 function Register() {
   const username = useRef();
@@ -11,6 +12,7 @@ function Register() {
   const password = useRef();
   const confirmPassword = useRef();
   const { isFetching, dispatch } = useContext(AuthContext);
+  // const navigate = useNavigate();
 
   const handleClick = async (e) => {
     e.preventDefault();
@@ -32,6 +34,7 @@ function Register() {
           },
           dispatch
         );
+        // navigate("/login");
       } catch (err) {
         console.error(err);
       }
@@ -85,6 +88,7 @@ function Register() {
           <button type="submit" disabled={isFetching}>
             {isFetching ? "Loading.." : "Create Account"}
           </button>
+          {/* <button type="submit">Create Account</button> */}
           <Link
             to="/login"
             style={{
