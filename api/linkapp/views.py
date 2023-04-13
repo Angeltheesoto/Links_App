@@ -1,13 +1,9 @@
-# from django.http import HttpResponse
-from rest_framework.response import Response
-# from rest_framework import status
-# from django.http import JsonResponse
 
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from rest_framework import permissions, viewsets, generics
+from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-# from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from knox.models import AuthToken
 from knox.views import LoginView as knoxLoginView
 
@@ -15,10 +11,10 @@ from .models import Education, Portfolio, Work
 from .serializers import EducationSerializer, PortfolioSerializer, UserSerializer, WorkSerializer, RegisterSerializer
 
 # Users API
+"""
+API endpoint that allows users to be viewed or edited.
+"""
 class UserViewSet(viewsets.ModelViewSet):
-    """
-    API endpoint that allows users to be viewed or edited.
-    """
     queryset = User.objects.all().order_by('-date_joined')
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
