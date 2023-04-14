@@ -18,7 +18,5 @@ urlpatterns = [
     path('api/login/', views.LoginAPI.as_view(), name='login'),
     path('api/logout/', knox_views.LogoutView.as_view(), name='logout'),
     path('api/logoutall/', knox_views.LogoutAllView.as_view(), name='logoutall'),
-    # path('posts/', views.PostViewSet.as_view({'get': 'list', 'post': 'create'}), name='post-list'),
-    # path('posts/<uuid:pk>/', views.PostViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy'}), name='post-detail'),
-    # path('posts/<str:username>/', views.PostViewSet.as_view({'get': 'list'}), name='user-posts'),
+    path('posts/<str:username>/', views.PostViewSet.as_view({'get': 'by_user'}), name='user_posts'),
 ]
