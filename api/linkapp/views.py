@@ -7,8 +7,11 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.models import AuthToken
 from knox.views import LoginView as knoxLoginView
 
-from .models import Education, Portfolio, Work
-from .serializers import EducationSerializer, PortfolioSerializer, UserSerializer, WorkSerializer, RegisterSerializer
+from .models import Education, Portfolio, Work, Post
+from .serializers import EducationSerializer, PortfolioSerializer, UserSerializer, WorkSerializer, RegisterSerializer, PostSerializer
+
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_GET
 
 # Users API
 """
@@ -58,6 +61,22 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     queryset = Portfolio.objects.all()
     serializer_class = PortfolioSerializer
     permission_classes = [permissions.AllowAny]
+
+class PostViewSet(viewsets.ModelViewSet):
+    queryset = Post.objects.all()
+    serializer_class = PostSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+
+
+
+
+
+
+
 
 # !Keep these here incase ModelViewSet doesnt work
 # !CREATE - WORKING
