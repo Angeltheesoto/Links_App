@@ -66,20 +66,20 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-    # print('heloooo')
-    # print('heloooo')
 
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
 
-    @action(detail=False, methods=['get'], url_path='by_user/(?P<username>[^/.]+)')
-    def by_user(self, request, username=None):
+class UserPostView(generics.ListAPIView):
+    serializer_class = PostSerializer
+    http_method_names = ['get']
+    def get_queryset(self):
+        username = self.kwargs['username']
         user = get_object_or_404(User, username=username)
-        posts = self.queryset.filter(author=user)
-        serializer = self.get_serializer(posts, many=True)
-        return Response(serializer.data)
+        queryset = Post.objects.filter(author=user)
+        return queryset
 
-# !Working here and in urls.py to try and filter posts by users.
+# !Working here and in urls.py to try and filter posts by users.          
 
 
 

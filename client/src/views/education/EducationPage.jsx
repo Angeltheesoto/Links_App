@@ -50,7 +50,7 @@ function EducationPage({ educationData }) {
     setIsEdit(!isEdit);
     setEditId(null);
     axios
-      .put(`http://localhost:8000/education/${editId}/`, formData)
+      .put(`http://localhost:8000/api-education/${editId}/`, formData)
       .then(window.location.reload())
       .then((res) => {
         console.log(res.data);

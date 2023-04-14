@@ -21,7 +21,7 @@ function App() {
   const [work, setWork] = useState([]);
   const [portfolio, setPortfolio] = useState([]);
 
-  const dataUrl = ["/education", "/work", "/portfolio"];
+  const dataUrl = ["/api-education", "/api-work", "/api-portfolio"];
   const config = {
     method: "GET",
     headers: {
