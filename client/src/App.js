@@ -1,7 +1,7 @@
 // dependencies
 import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, redirect } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 
 // components
@@ -16,19 +16,30 @@ import { AuthContext } from "./context/AuthContext";
 import Home from "./views/home/Home";
 
 function App() {
+  const { user } = useContext(AuthContext);
+
   // ?fetch data ----------------------->>>>
   const [education, setEducation] = useState([]);
   const [work, setWork] = useState([]);
   const [portfolio, setPortfolio] = useState([]);
+  const [posts, setPosts] = useState([]);
 
-  const dataUrl = ["/api-education", "/api-work", "/api-portfolio"];
-  const config = {
+  const dataUrl = [
+    "/api-education",
+    "/api-work",
+    "/api-portfolio",
+    "/api-posts",
+  ];
+  let config = {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
   };
+  if (user !== null) {
+    config.headers.Authorization = `Token ${user.token}`;
+  }
 
   // This fetches data from more than one url
   useEffect(() => {
@@ -37,16 +48,18 @@ function App() {
         await axios
           .all(dataUrl.map((promise) => axios.get(promise, config)))
           .then(
-            axios.spread((res1, res2, res3) => {
+            axios.spread((res1, res2, res3, res4) => {
               setEducation((prev) => (prev = res1.data));
               setWork((prev) => (prev = res2.data));
               setPortfolio((prev) => (prev = res3.data));
+              setPosts((prev) => (prev = res4.data));
             })
           );
         // .then(
         //   console.log("education: ", education),
         //   console.log("work: ", work),
-        //   console.log("portfolio: ", portfolio)
+        //   console.log("portfolio: ", portfolio),
+        //   console.log("posts: ", posts)
         // );
       } catch (err) {
         console.log(err);
@@ -56,7 +69,6 @@ function App() {
   }, []);
 
   // ?fetch data ----------------------->>>>
-  const { user } = useContext(AuthContext);
 
   return (
     <div className="App">
@@ -65,11 +77,17 @@ function App() {
           <MyNavbar />
           <Container>
             <Routes>
-              <Route path="/" element={user ? <Home /> : <Register />} />
-              <Route path="/login" element={user ? <Home /> : <Login />} />
+              <Route
+                path="/"
+                element={user ? <Home postsData={posts} /> : <Register />}
+              />
+              <Route
+                path="/login"
+                element={user ? <Navigate to="/" /> : <Login />}
+              />
               <Route
                 path="/register"
-                element={user ? <Home /> : <Register />}
+                element={user ? <Navigate to="/" /> : <Register />}
               />
 
               <Route

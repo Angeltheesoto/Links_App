@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./home.css";
+import { AuthContext } from "../../context/AuthContext";
 
-const Home = () => {
+const Home = ({ postsData }) => {
+  const { user } = useContext(AuthContext);
+  console.log(user);
+  console.log(postsData);
+
   return (
-    <div>
-      <h1>HomePage</h1>
+    <div className="HomeContainer">
+      <h1>home</h1>
     </div>
   );
 };

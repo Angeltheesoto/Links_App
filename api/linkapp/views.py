@@ -1,7 +1,8 @@
 
 from django.contrib.auth.models import User
 from django.contrib.auth import login
-from rest_framework import permissions, viewsets, generics
+from django.shortcuts import get_object_or_404
+from rest_framework import permissions, viewsets, generics, status
 from rest_framework.response import Response
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.models import AuthToken
@@ -9,9 +10,6 @@ from knox.views import LoginView as knoxLoginView
 
 from .models import Education, Portfolio, Work, Post
 from .serializers import EducationSerializer, PortfolioSerializer, UserSerializer, WorkSerializer, RegisterSerializer, PostSerializer
-
-from django.shortcuts import get_object_or_404
-from rest_framework.decorators import action
 
 # Users API
 """
@@ -66,25 +64,33 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
-
+    # When you create a post it assigns it to you.
     def perform_create(self, serializer):
         serializer.save(author=self.request.user)
+    # Deletes post if you are the user who created it.
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.author != request.user:
+            return Response({"message": "You are not allowed to delete this post"}, status=status.HTTP_403_FORBIDDEN)
+        self.perform_destroy(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
+    # Updates post if you are the user who created it.
+    def update(self, request, *args, **kwargs):
+        partial = kwargs.pop('partial', False)
+        instance = self.get_object()
+        if instance.author != request.user:
+            return Response({"message": "You are not allowed to update this post"}, status=status.HTTP_403_FORBIDDEN)
+        serializer = self.get_serializer(instance, data=request.data, partial=partial)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 
-class UserPostView(generics.ListAPIView):
-    serializer_class = PostSerializer
-    http_method_names = ['get']
+class UserPostViewSet(PostViewSet):
     def get_queryset(self):
         username = self.kwargs['username']
         user = get_object_or_404(User, username=username)
         queryset = Post.objects.filter(author=user)
         return queryset
-
-# !Working here and in urls.py to try and filter posts by users.          
-
-
-
-
-
 
 
 # !Keep these here incase ModelViewSet doesnt work
