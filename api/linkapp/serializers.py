@@ -35,5 +35,5 @@ class PortfolioSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ['id', 'title', 'content', 'author', 'created_at']
-        read_only_fields = ['id', 'author', 'created_at']
+        fields = ['id', 'title', 'content', 'author', 'author_username', 'created_at']
+        read_only_fields = ['id', 'author', 'author_username', 'created_at']

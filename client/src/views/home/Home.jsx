@@ -1,11 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./home.css";
 import { AuthContext } from "../../context/AuthContext";
 
 const Home = ({ postsData }) => {
+  // Will need this to make requests to preform CRUD operations on data.
   const { user } = useContext(AuthContext);
-  console.log(user);
-  console.log(postsData);
+
+  const filterPosts = postsData.filter(
+    (post) => post.author_username === "test4"
+  );
+  console.log(filterPosts);
 
   return (
     <div className="HomeContainer">
