@@ -15,6 +15,11 @@ function Login() {
       { username: username.current.value, password: password.current.value },
       dispatch
     );
+    if (!localStorage.getItem("username")) {
+      localStorage.setItem("username", JSON.stringify(username.current.value));
+    } else {
+      localStorage.setItem("username", JSON.stringify(username.current.value));
+    }
   };
 
   return (

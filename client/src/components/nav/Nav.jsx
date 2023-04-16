@@ -7,6 +7,9 @@ import { logoutCall } from "../../apiCalls";
 function MyNavbar({ user }) {
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const logOut = () => {
+    if (localStorage.getItem("username")) {
+      localStorage.setItem("username", null);
+    }
     logoutCall(dispatch);
   };
 

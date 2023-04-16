@@ -34,6 +34,18 @@ function Register() {
           },
           dispatch
         );
+        if (!localStorage.getItem("username")) {
+          localStorage.setItem(
+            "username",
+            JSON.stringify(username.current.value)
+          );
+        } else {
+          localStorage.setItem(
+            "username",
+            JSON.stringify(username.current.value)
+          );
+        }
+
         // navigate("/login");
       } catch (err) {
         console.error(err);
