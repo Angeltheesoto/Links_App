@@ -8,6 +8,8 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email']
 
 class RegisterSerializer(serializers.ModelSerializer):
+    profile_image = serializers.ImageField(required=False)
+
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'password']
@@ -35,5 +37,5 @@ class PortfolioSerializer(serializers.ModelSerializer):
 class PostSerializer(serializers.ModelSerializer):
     class Meta:
         model = Post
-        fields = ['id', 'title', 'content', 'author', 'author_username', 'created_at']
+        fields = '__all__'
         read_only_fields = ['id', 'author', 'author_username', 'created_at']

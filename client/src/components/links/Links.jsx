@@ -4,7 +4,17 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
 
-const Links = ({ title, text, url, brand, uniKey }) => {
+const Links = ({
+  title,
+  text,
+  url,
+  brand,
+  uniKey,
+  editevent,
+  deleteevent,
+  edit,
+  del,
+}) => {
   return (
     <div className="linksContainer" key={uniKey}>
       <a href={url} className="linksLink" target="_blank">
@@ -34,6 +44,8 @@ const Links = ({ title, text, url, brand, uniKey }) => {
           </div>
         </div>
       </a>
+      {edit ? <button onClick={editevent}>{edit}</button> : null}
+      {del ? <button onClick={deleteevent}>{del}</button> : null}
     </div>
   );
 };

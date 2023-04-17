@@ -91,38 +91,3 @@ class UserPostViewSet(PostViewSet):
         user = get_object_or_404(User, username=username)
         queryset = Post.objects.filter(author=user)
         return queryset
-
-
-# !Keep these here incase ModelViewSet doesnt work
-# !CREATE - WORKING
-# def create_education(request):
-#     if request.method == 'POST':
-#         serializer = EducationSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JsonResponse(serializer.data, status=201)
-#         return JsonResponse(serializer.errors, status=400)
-#     return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-# !UPDATE - WORKING
-# def update_education(request, id):
-#     try:
-#         education = Education.objects.get(id=id)
-#     except Education.DoesNotExist:
-#         return JsonResponse({'error': 'Education not found'}, status=404)
-#     if request.method == 'PUT':
-#         serializer = EducationSerializer(education, data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             return JsonResponse(serializer.data)
-#         return JsonResponse(serializer.errors, status=400)
-#     return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-# !DELETE - WORKING
-# def delete_education(request, id):
-#     try:
-#         education = Education.objects.get(id=id)
-#         education.delete()
-#         return JsonResponse({'message': 'Education with id {} deleted successfully.'.format(id)})
-#     except Education.DoesNotExist:
-#         return HttpResponse(status=404)

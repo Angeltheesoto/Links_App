@@ -15,3 +15,37 @@
 .homeProfileUsername {
   margin-top: 1rem;
 }
+
+/* form */
+/* .educationContainer {
+  margin-top: 1rem;
+} */
+
+.editContainer {
+  position: fixed;
+  display: grid;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.523);
+  border: 1px solid black;
+  align-items: center;
+}
+
+.homeForm {
+  display: flex;
+  flex-flow: column;
+  margin: 0 auto;
+  width: 30rem;
+}
+
+.homeForm label {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 1rem;
+}
+
+.editHide {
+  display: none;
+}
