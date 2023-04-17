@@ -1,0 +1,17 @@
+.homeProfileContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.homeProfileImage {
+  width: 5rem;
+  border: 1px solid black;
+  border-radius: 100px;
+}
+
+.homeProfileUsername {
+  margin-top: 1rem;
+}

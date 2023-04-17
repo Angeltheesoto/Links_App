@@ -14,6 +14,7 @@ import WorkPage from "./views/work/WorkPage";
 import PortfolioPage from "./views/portfolio/PortfolioPage";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./views/home/Home";
+import Profile from "./views/profile/Profile";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -99,6 +100,7 @@ function App() {
                 path="/portfolio"
                 element={<PortfolioPage portfolioData={portfolio} />}
               />
+              <Route path="/profile/:username" element={<Profile />} />
             </Routes>
           </Container>
         </BrowserRouter>

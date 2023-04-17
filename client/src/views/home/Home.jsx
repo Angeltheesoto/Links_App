@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import "./home.css";
 import { AuthContext } from "../../context/AuthContext";
+import Links from "../../components/links/Links";
 
 const Home = ({ postsData }) => {
   // Will need this to make requests to preform CRUD operations on data.
@@ -18,11 +19,26 @@ const Home = ({ postsData }) => {
 
   return (
     <div className="HomeContainer">
-      <h1>home</h1>
+      <div className="homeProfileContainer">
+        <img
+          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+          className="homeProfileImage"
+        />
+        <h2 className="homeProfileUsername">{username}</h2>
+      </div>
+      {!filterPosts
+        ? "Loading"
+        : filterPosts.map((i) => (
+            <Links
+              url={i.url}
+              title={i.title}
+              text={i.text}
+              brand={i.brand}
+              uniKey={i.id}
+            />
+          ))}
     </div>
   );
 };
 
 export default Home;
-
-// When i refresh page and try logging out it bugs out and doesnt let me go to login page
