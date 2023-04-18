@@ -4,8 +4,7 @@
 }
 
 .labelContainer {
-  background-color: rgba(103, 164, 205, 0.626);
-  padding: 1rem;
+  margin-top: 2rem;
   border-radius: 10px;
 }
 
@@ -21,4 +20,64 @@
   display: flex;
   flex-flow: column;
   margin-bottom: 1rem;
+}
+
+.registerFormContainer {
+  border-radius: 6px;
+  padding: 2rem 3rem 1rem;
+  background-color: white;
+}
+
+.registerHeading {
+  text-align: center;
+  font-size: 3rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #bdbdbd;
+}
+
+.registerBtnContainer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1rem;
+}
+
+.registerBtn {
+  padding: 10px 0;
+  border: none;
+  border-radius: 30px;
+  color: white;
+  background-image: linear-gradient(to bottom right, #92fe9d, #00c9ff);
+}
+
+.registerBtnSecondContainer {
+  display: flex;
+  justify-content: center;
+  padding-top: 2rem;
+}
+
+.registerText {
+  margin-right: 10px;
+}
+
+/* bootstrap */
+
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+.form-control {
+  border-radius: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid black !important;
+}
+
+.form-select:focus {
+  box-shadow: none !important;
+}
+
+.form-select {
+  border-radius: 0 !important;
+  border: none !important;
+  border-bottom: 1px solid black !important;
+  padding: 1rem !important;
 }

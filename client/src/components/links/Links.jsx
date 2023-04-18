@@ -44,8 +44,18 @@ const Links = ({
           </div>
         </div>
       </a>
-      {edit ? <button onClick={editevent}>{edit}</button> : null}
-      {del ? <button onClick={deleteevent}>{del}</button> : null}
+      <div className="linksBtnContainer">
+        {edit ? (
+          <button onClick={editevent} className="linksButton edit">
+            {edit}
+          </button>
+        ) : null}
+        {del ? (
+          <button onClick={deleteevent} className="linksButton del">
+            {del}
+          </button>
+        ) : null}
+      </div>
     </div>
   );
 };

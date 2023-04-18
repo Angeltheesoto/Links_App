@@ -18,30 +18,28 @@ const Home = ({ postsData }) => {
   );
 
   // CRUD OPERATIONS
-  const [selectedOption, setSelectedOption] = useState("");
   const [isEdit, setIsEdit] = useState(false);
   const [editId, setEditId] = useState(null);
   const [isAdd, setIsAdd] = useState(true);
   const [formData, setFormData] = useState({
-    url: "",
     title: "",
     content: "",
-    profile_option: "",
+    brand: "other",
+    url: "",
   });
   const handleChange = (e) => {
-    setSelectedOption(e.target.value);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+
   const config = {
     headers: {
       Authorization: "Token " + user.token,
       "Content-Type": "application/json",
     },
   };
-
   // ADD
   const handleAdd = (e) => {
     setIsAdd(!isAdd);
@@ -51,9 +49,9 @@ const Home = ({ postsData }) => {
     setIsAdd(!isAdd);
     axios
       .post(`http://localhost:8000/api-posts/`, formData, config)
-      .then(window.location.reload())
       .then((res) => {
         console.log(res.data);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -70,9 +68,9 @@ const Home = ({ postsData }) => {
     setEditId(null);
     axios
       .put(`http://localhost:8000/api-posts/${editId}/`, formData, config)
-      .then(window.location.reload())
       .then((res) => {
         console.log(res.data);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -82,9 +80,9 @@ const Home = ({ postsData }) => {
   const handleDelete = (id) => {
     axios
       .delete(`http://localhost:8000/api-posts/${id}/`, config)
-      .then(window.location.reload())
       .then((res) => {
         console.log(res.data);
+        window.location.reload();
       })
       .catch((err) => {
         console.log(err);
@@ -102,53 +100,78 @@ const Home = ({ postsData }) => {
       </div>
 
       {/* CREATE */}
-      <button
-        type="submit"
-        onClick={handleAdd}
-        className={!isAdd ? "editHide" : ""}
-      >
-        Add Link
-      </button>
+      <div className="homeBtnContainer">
+        <button
+          type="submit"
+          onClick={handleAdd}
+          className={!isAdd ? "editHide" : "linksButton edit"}
+        >
+          Add Link
+        </button>
+      </div>
       {isAdd ? null : (
         <div className="editContainer">
           <form onSubmit={handleConfirmAdd} className="homeForm">
-            <label>
-              Link :
-              <input
-                type="url"
-                name="url"
-                placeholder="link"
+            <div className="registerFormContainer">
+              <h1 className="registerHeading">Add Link</h1>
+              <div className="labelContainer">
+                <div className="form-floating mb-3">
+                  <input
+                    className="form-control"
+                    id="floatingInput"
+                    type="url"
+                    name="url"
+                    placeholder="link"
+                    onChange={handleChange}
+                  />
+                  <label for="floatingInput">Link</label>
+                </div>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  className="form-control"
+                  id="floatingInput2"
+                  type="text"
+                  name="title"
+                  placeholder="Title"
+                  onChange={handleChange}
+                />
+                <label for="floatingInput2">Title</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  className="form-control"
+                  id="floatingInput3"
+                  type="text"
+                  name="content"
+                  placeholder="Description"
+                  onChange={handleChange}
+                />
+                <label for="floatingInput3">Description</label>
+              </div>
+              <select
                 onChange={handleChange}
-              />
-            </label>
-            <label>
-              Title :<br />
-              <input
-                type="text"
-                name="title"
-                placeholder="Title"
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Description :<br />
-              <input
-                type="text"
-                name="content"
-                placeholder="Description"
-                onChange={handleChange}
-              />
-            </label>
-            <label>
-              Choose company :<br />
-              <select onChange={handleChange} name="profile_option">
+                name="brand"
+                className="form-select"
+              >
+                <option value="other">Other</option>
                 <option value="facebook">Facebook</option>
                 <option value="linkedIn">LinkedIn</option>
                 <option value="instagram">Instagram</option>
               </select>
-            </label>
-            <button onClick={handleAdd}>Cancel</button>
-            <button type="submit">Add Link</button>
+
+              <div className="homeBtnContainer2">
+                <button type="submit" className="registerBtn">
+                  Add Link
+                </button>
+                <button
+                  onClick={handleAdd}
+                  className="registerBtn homeBtnCancel"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       )}
@@ -162,50 +185,71 @@ const Home = ({ postsData }) => {
             isEdit && i.id === editId ? (
               <div className="editContainer">
                 <form onSubmit={handleConfirmEdit} className="educationForm">
-                  <label>
-                    Link :
-                    <input
-                      type="url"
-                      name="url"
-                      placeholder={i.url}
-                      value={formData.url}
-                      onChange={handleChange}
-                    />
-                  </label>
-                  <label>
-                    Title :<br />
-                    <input
-                      type="text"
-                      name="title"
-                      placeholder={i.title}
-                      value={formData.title}
-                      onChange={handleChange}
-                    />
-                  </label>
-                  <label>
-                    Description :<br />
-                    <input
-                      type="text"
-                      name="content"
-                      placeholder={i.content}
-                      value={formData.content}
-                      onChange={handleChange}
-                    />
-                  </label>
-                  <label>
-                    Choose company :<br />
+                  <div className="registerFormContainer">
+                    <h1 className="registerHeading">Edit</h1>
+                    <div className="labelContainer">
+                      <div className="form-floating mb-3">
+                        <input
+                          className="form-control"
+                          id="floatingInput"
+                          type="url"
+                          name="url"
+                          placeholder={i.url}
+                          value={formData.url}
+                          onChange={handleChange}
+                        />
+                        <label for="floatingInput">Link</label>
+                      </div>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        className="form-control"
+                        id="floatingInput2"
+                        type="text"
+                        name="title"
+                        placeholder={i.title}
+                        value={formData.title}
+                        onChange={handleChange}
+                      />
+                      <label for="floatingInput2">Title</label>
+                    </div>
+                    <div className="form-floating mb-3">
+                      <input
+                        className="form-control"
+                        id="floatingInput3"
+                        type="text"
+                        name="content"
+                        placeholder={i.content}
+                        value={formData.content}
+                        onChange={handleChange}
+                      />
+                      <label for="floatingInput3">Description</label>
+                    </div>
+
                     <select
                       onChange={handleChange}
-                      name="profile_option"
-                      value={selectedOption}
+                      name="brand"
+                      className="form-select"
                     >
+                      <option selected>Choose brand</option>
                       <option value="facebook">Facebook</option>
                       <option value="linkedIn">LinkedIn</option>
                       <option value="instagram">Instagram</option>
+                      <option value="other">Other</option>
                     </select>
-                  </label>
-                  <button onClick={() => setIsEdit(!isEdit)}>Cancel</button>
-                  <button type="submit">Confirm</button>
+
+                    <div className="homeBtnContainer2">
+                      <button type="submit" className="registerBtn">
+                        Confirm
+                      </button>
+                      <button
+                        onClick={() => setIsEdit(!isEdit)}
+                        className="registerBtn homeBtnCancel"
+                      >
+                        Cancel
+                      </button>
+                    </div>
+                  </div>
                 </form>
               </div>
             ) : (

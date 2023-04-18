@@ -14,7 +14,7 @@ function MyNavbar({ user }) {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="light" variant="light" expand="lg">
       <Container>
         <Link to="/" className="nav-link">
           <Navbar.Brand>HUB</Navbar.Brand>
@@ -36,8 +36,8 @@ function MyNavbar({ user }) {
             </Link>
             {currentUser ? (
               <Link to={"/login"} style={{ textDecoration: "none" }}>
-                <button onClick={logOut}>
-                  <p>Log out</p>
+                <button onClick={logOut} className="linksButton del">
+                  Log out
                 </button>
               </Link>
             ) : null}

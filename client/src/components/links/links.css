@@ -48,3 +48,27 @@
   height: 100%;
   border-radius: 10px;
 }
+
+.linksBtnContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.linksButton {
+  margin: 0 10px;
+  border-radius: 30px;
+  border: none;
+  padding: 10px;
+}
+
+.edit {
+  margin-bottom: 10px;
+  color: black;
+  background-image: white;
+}
+
+.del {
+  background-image: linear-gradient(to bottom right, #e32c58, #ffb199);
+  color: white;
+}

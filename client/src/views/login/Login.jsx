@@ -25,40 +25,56 @@ function Login() {
   return (
     <div className="registerContainer">
       <form className="registerForm" onSubmit={handleClick}>
-        <div className="labelContainer">
-          <label>
-            Username :
-            <input
-              type="text"
-              name="username"
-              placeholder="username"
-              ref={username}
-              required
-            />
-          </label>
-          <label>
-            Password :
-            <input
-              type="password"
-              name="password"
-              placeholder="password"
-              ref={password}
-              required
-            />
-          </label>
-          <button type="submit" disabled={isFetching}>
-            {isFetching ? "Loading.." : "Log In"}
-          </button>
-          <Link
-            to="/register"
-            style={{
-              textDecoration: "none",
-              width: "60%",
-              alignSelf: "center",
-            }}
-          >
-            <button className="loginRegisterButton">Register</button>
-          </Link>
+        <div className="registerFormContainer">
+          <h1 className="registerHeading">Log In</h1>
+          <div className="labelContainer">
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                id="floatingInput"
+                type="text"
+                name="username"
+                placeholder="username"
+                ref={username}
+                required
+              />
+              <label for="floatingInput">Username</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                id="floatingInput2"
+                type="password"
+                name="password"
+                placeholder="password"
+                ref={password}
+                required
+              />
+              <label for="floatingInput2">Password</label>
+            </div>
+
+            <div className="registerBtnContainer">
+              <button
+                type="submit"
+                disabled={isFetching}
+                className="registerBtn"
+              >
+                {isFetching ? "Loading.." : "Log In"}
+              </button>
+              <div className="registerBtnSecondContainer">
+                <p className="registerText">Need an account?</p>
+                <Link
+                  to="/register"
+                  style={{
+                    textDecoration: "none",
+                    height: "fit-content",
+                  }}
+                >
+                  Register
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
