@@ -20,6 +20,10 @@ class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
+    def username_exists(self, request, username):
+        user_exists = User.objects.filter(username=username).exists()
+        return Response({'exists': user_exists})
+
 # Register API
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
@@ -60,6 +64,7 @@ class PortfolioViewSet(viewsets.ModelViewSet):
     serializer_class = PortfolioSerializer
     permission_classes = [permissions.AllowAny]
 
+# CRUD operations for users posts
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -85,6 +90,7 @@ class PostViewSet(viewsets.ModelViewSet):
         self.perform_update(serializer)
         return Response(serializer.data)
 
+# filters users posts
 class UserPostViewSet(PostViewSet):
     def get_queryset(self):
         username = self.kwargs['username']

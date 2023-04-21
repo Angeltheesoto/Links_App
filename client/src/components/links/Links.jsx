@@ -4,6 +4,13 @@ import FacebookIcon from "@material-ui/icons/Facebook";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import InstagramIcon from "@material-ui/icons/Instagram";
 
+import YouTubeIcon from "@material-ui/icons/YouTube";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import GitHubIcon from "@material-ui/icons/GitHub";
+import RedditIcon from "@material-ui/icons/Reddit";
+import PinterestIcon from "@material-ui/icons/Pinterest";
+import LinkIcon from "@material-ui/icons/Link";
+
 const Links = ({
   title,
   text,
@@ -28,6 +35,24 @@ const Links = ({
             ) : null}
             {brand === "instagram" ? (
               <InstagramIcon style={{ fontSize: "5rem" }} />
+            ) : null}
+            {brand === "youtube" ? (
+              <YouTubeIcon style={{ fontSize: "5rem" }} />
+            ) : null}
+            {brand === "twitter" ? (
+              <TwitterIcon style={{ fontSize: "5rem" }} />
+            ) : null}
+            {brand === "github" ? (
+              <GitHubIcon style={{ fontSize: "5rem" }} />
+            ) : null}
+            {brand === "reddit" ? (
+              <RedditIcon style={{ fontSize: "5rem" }} />
+            ) : null}
+            {brand === "pinterest" ? (
+              <PinterestIcon style={{ fontSize: "5rem" }} />
+            ) : null}
+            {brand === "other" ? (
+              <LinkIcon style={{ fontSize: "5rem" }} />
             ) : null}
           </div>
           <div className="linksSecondContainer">

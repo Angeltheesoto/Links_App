@@ -8,7 +8,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email']
 
 class RegisterSerializer(serializers.ModelSerializer):
-    # profile_image = serializers.ImageField(required=False)
 
     class Meta:
         model = User

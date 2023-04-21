@@ -9,11 +9,11 @@
 .linksLink {
   width: 100%;
   text-decoration: none;
-  color: white;
+  color: black;
 }
 
 .linksLink:hover {
-  color: white;
+  color: black;
 }
 
 .linksSecondContainer {
@@ -33,7 +33,7 @@
 
 .linksContent {
   border-radius: 10px;
-  background-color: rgb(33, 37, 41);
+  background-color: white;
   text-align: center;
   padding: 1rem;
   display: flex;

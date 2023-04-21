@@ -3,6 +3,7 @@ import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { logoutCall } from "../../apiCalls";
+import "./nav.css";
 
 function MyNavbar({ user }) {
   const { user: currentUser, dispatch } = useContext(AuthContext);
@@ -16,29 +17,23 @@ function MyNavbar({ user }) {
   return (
     <Navbar bg="light" variant="light" expand="lg">
       <Container>
-        <Link to="/" className="nav-link">
+        <Link to="/" className="nav-link ">
           <Navbar.Brand>HUB</Navbar.Brand>
         </Link>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav>
-              <Link to="/education" className="nav-link">
-                {" "}
-                Education
-              </Link>
-            </Nav>
-            <Link to="/work" className="nav-link">
-              <Nav>Work Experience</Nav>
-            </Link>
             <Link to="/portfolio" className="nav-link">
               <Nav>Portfolio</Nav>
             </Link>
             {currentUser ? (
-              <Link to={"/login"} style={{ textDecoration: "none" }}>
-                <button onClick={logOut} className="linksButton del">
+              <Link
+                to={"/login"}
+                style={{ textDecoration: "none", width: "6rem" }}
+              >
+                <div onClick={logOut} className="linksButton del">
                   Log out
-                </button>
+                </div>
               </Link>
             ) : null}
           </Nav>

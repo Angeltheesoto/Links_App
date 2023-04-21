@@ -154,10 +154,16 @@ const Home = ({ postsData }) => {
                 name="brand"
                 className="form-select"
               >
-                <option value="other">Other</option>
+                <option defaultChecked>Please Choose Source</option>
                 <option value="facebook">Facebook</option>
                 <option value="linkedIn">LinkedIn</option>
                 <option value="instagram">Instagram</option>
+                <option value="youtube">Youtube</option>
+                <option value="twitter">Twitter</option>
+                <option value="github">Github</option>
+                <option value="reddit">Reddit</option>
+                <option value="pinterest">Pinterest</option>
+                <option value="other">Other</option>
               </select>
 
               <div className="homeBtnContainer2">
@@ -184,7 +190,7 @@ const Home = ({ postsData }) => {
           {filterPosts.map((i) =>
             isEdit && i.id === editId ? (
               <div className="editContainer">
-                <form onSubmit={handleConfirmEdit} className="educationForm">
+                <form onSubmit={handleConfirmEdit} className="homeForm">
                   <div className="registerFormContainer">
                     <h1 className="registerHeading">Edit</h1>
                     <div className="labelContainer">
@@ -231,10 +237,15 @@ const Home = ({ postsData }) => {
                       name="brand"
                       className="form-select"
                     >
-                      <option selected>Choose brand</option>
+                      <option defaultChecked>Please Choose Source</option>
                       <option value="facebook">Facebook</option>
                       <option value="linkedIn">LinkedIn</option>
                       <option value="instagram">Instagram</option>
+                      <option value="youtube">Youtube</option>
+                      <option value="twitter">Twitter</option>
+                      <option value="github">Github</option>
+                      <option value="reddit">Reddit</option>
+                      <option value="pinterest">Pinterest</option>
                       <option value="other">Other</option>
                     </select>
 

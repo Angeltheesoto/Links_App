@@ -9,12 +9,11 @@ import { Container } from "react-bootstrap";
 import MyNavbar from "./components/nav/Nav";
 import Register from "./views/register/Register";
 import Login from "./views/login/Login";
-import EducationPage from "./views/education/EducationPage";
-import WorkPage from "./views/work/WorkPage";
 import PortfolioPage from "./views/portfolio/PortfolioPage";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./views/home/Home";
 import Profile from "./views/profile/Profile";
+import Error from "./components/error/Error";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -90,17 +89,15 @@ function App() {
                 path="/register"
                 element={user ? <Navigate to="/" /> : <Register />}
               />
-
-              <Route
-                path="/education"
-                element={<EducationPage educationData={education} />}
-              />
-              <Route path="/work" element={<WorkPage workData={work} />} />
               <Route
                 path="/portfolio"
                 element={<PortfolioPage portfolioData={portfolio} />}
               />
-              <Route path="/profile/:username" element={<Profile />} />
+              <Route
+                path="/profile/:username"
+                element={<Profile postsData={posts} />}
+              />
+              <Route path="*" element={<Error />} />
             </Routes>
           </Container>
         </BrowserRouter>

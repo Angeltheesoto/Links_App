@@ -1,10 +1,6 @@
 # Things to work on:
 
-1. If user logs in have it show logout button.
-2. Encrypt user password in backend.
-3. Start working on crud app with new data/models and delete the old.
-
-[✔] - Create
-[✔] - Read
-[✔] - Update
-[✔] - Delete
+1. Encrypt user password in backend.
+   🌟2. Implement a users profile image in front and backend.
+2. Fix logout button not logging out when button is clicked after user had refreshed page.
+3. Align logout button to right-side
