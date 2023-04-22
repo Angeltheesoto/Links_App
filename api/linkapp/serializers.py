@@ -1,11 +1,17 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Education, Work, Portfolio, Post
+from .models import Education, Work, Portfolio, Post, Profile
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'username', 'email']
+
+class ProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    class Meta:
+        model = Profile
+        fields = ['id', 'user', 'profile_picture']
 
 class RegisterSerializer(serializers.ModelSerializer):
 
@@ -22,12 +28,10 @@ class EducationSerializer(serializers.ModelSerializer):
     class Meta:
         model = Education
         fields = '__all__'
-
 class WorkSerializer(serializers.ModelSerializer):
     class Meta:
         model = Work
         fields = '__all__'
-
 class PortfolioSerializer(serializers.ModelSerializer):
     class Meta:
         model = Portfolio
@@ -38,3 +42,5 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
         read_only_fields = ['id', 'author', 'author_username', 'created_at']
+
+

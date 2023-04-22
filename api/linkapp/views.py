@@ -1,4 +1,5 @@
 
+import uuid
 from django.contrib.auth.models import User
 from django.contrib.auth import login
 from django.shortcuts import get_object_or_404
@@ -8,8 +9,8 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.models import AuthToken
 from knox.views import LoginView as knoxLoginView
 
-from .models import Education, Portfolio, Work, Post
-from .serializers import EducationSerializer, PortfolioSerializer, UserSerializer, WorkSerializer, RegisterSerializer, PostSerializer
+from .models import Education, Portfolio, Work, Post, Profile
+from .serializers import EducationSerializer, PortfolioSerializer, UserSerializer, WorkSerializer, RegisterSerializer, PostSerializer, ProfileSerializer
 
 # Users API
 """
@@ -23,6 +24,28 @@ class UserViewSet(viewsets.ModelViewSet):
     def username_exists(self, request, username):
         user_exists = User.objects.filter(username=username).exists()
         return Response({'exists': user_exists})
+    
+class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.AllowAny]
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def update(self, request, pk=None, *args, **kwargs):
+        profile = self.get_object()
+
+        profile_picture = request.FILES.get('profile_picture', None)
+        if profile_picture:
+            profile.profile_picture.save(str(uuid.uuid4()), profile_picture)
+            profile.save()
+
+        serializer = self.get_serializer(profile, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(serializer.data)
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):

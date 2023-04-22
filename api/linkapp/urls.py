@@ -25,6 +25,8 @@ urlpatterns = [
     path('api-posts/<int:pk>/delete/', views.PostViewSet.as_view({'delete': 'destroy'}), name='post-delete'),
     path('users/posts/<str:username>/', views.UserPostViewSet.as_view({'get': 'list'}), name='user-posts'),
 
-    path('api-users/<str:username>/exists/', views.UserViewSet.as_view({'get': 'username_exists'}))
+    path('api-users/<str:username>/exists/', views.UserViewSet.as_view({'get': 'username_exists'})),
+
+    path('api-users/<int:pk>/profile_picture/', views.ProfileViewSet.as_view({'get': 'retrieve', 'put': 'update', 'delete': 'destroy', 'post': 'create'}), name='user_profile_picture'),
 ]
 
