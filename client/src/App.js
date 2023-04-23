@@ -19,17 +19,11 @@ function App() {
   const { user } = useContext(AuthContext);
 
   // ?fetch data ----------------------->>>>
-  const [education, setEducation] = useState([]);
-  const [work, setWork] = useState([]);
   const [portfolio, setPortfolio] = useState([]);
   const [posts, setPosts] = useState([]);
+  const [profilePic, setProfilePic] = useState([]);
 
-  const dataUrl = [
-    "/api-education",
-    "/api-work",
-    "/api-portfolio",
-    "/api-posts",
-  ];
+  const dataUrl = ["/api-portfolio", "/api-posts", "/profile-images"];
   let config = {
     method: "GET",
     headers: {
@@ -48,11 +42,10 @@ function App() {
         await axios
           .all(dataUrl.map((promise) => axios.get(promise, config)))
           .then(
-            axios.spread((res1, res2, res3, res4) => {
-              setEducation((prev) => (prev = res1.data));
-              setWork((prev) => (prev = res2.data));
-              setPortfolio((prev) => (prev = res3.data));
-              setPosts((prev) => (prev = res4.data));
+            axios.spread((res1, res2, res3) => {
+              setPortfolio((prev) => (prev = res1.data));
+              setPosts((prev) => (prev = res2.data));
+              setProfilePic((prev) => (prev = res3.data));
             })
           );
         // .then(
@@ -79,7 +72,13 @@ function App() {
             <Routes>
               <Route
                 path="/"
-                element={user ? <Home postsData={posts} /> : <Register />}
+                element={
+                  user ? (
+                    <Home postsData={posts} profilePictureData={profilePic} />
+                  ) : (
+                    <Register />
+                  )
+                }
               />
               <Route
                 path="/login"
@@ -95,7 +94,9 @@ function App() {
               />
               <Route
                 path="/profile/:username"
-                element={<Profile postsData={posts} />}
+                element={
+                  <Profile postsData={posts} profilePictureData={profilePic} />
+                }
               />
               <Route path="*" element={<Error />} />
             </Routes>

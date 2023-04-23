@@ -1,7 +1,7 @@
 
-import uuid
 from django.contrib.auth.models import User
 from django.contrib.auth import login
+from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import get_object_or_404
 from rest_framework import permissions, viewsets, generics, status
 from rest_framework.response import Response
@@ -9,8 +9,10 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.models import AuthToken
 from knox.views import LoginView as knoxLoginView
 
-from .models import Education, Portfolio, Work, Post, Profile
-from .serializers import EducationSerializer, PortfolioSerializer, UserSerializer, WorkSerializer, RegisterSerializer, PostSerializer, ProfileSerializer
+from .models import Portfolio, Post, ProfileImage
+from .serializers import PortfolioSerializer, UserSerializer, RegisterSerializer, PostSerializer, ProfileImageSerializer
+
+from rest_framework.views import APIView
 
 # Users API
 """
@@ -24,28 +26,6 @@ class UserViewSet(viewsets.ModelViewSet):
     def username_exists(self, request, username):
         user_exists = User.objects.filter(username=username).exists()
         return Response({'exists': user_exists})
-    
-class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-    permission_classes = [permissions.AllowAny]
-
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
-
-    def update(self, request, pk=None, *args, **kwargs):
-        profile = self.get_object()
-
-        profile_picture = request.FILES.get('profile_picture', None)
-        if profile_picture:
-            profile.profile_picture.save(str(uuid.uuid4()), profile_picture)
-            profile.save()
-
-        serializer = self.get_serializer(profile, data=request.data, partial=True)
-        serializer.is_valid(raise_exception=True)
-        serializer.save()
-
-        return Response(serializer.data)
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -72,22 +52,7 @@ class LoginAPI(knoxLoginView):
         login(request, user)
         return super(LoginAPI, self).post(request, format=None)
 
-class EducationViewSet(viewsets.ModelViewSet):
-    queryset = Education.objects.all()
-    serializer_class = EducationSerializer
-    permission_classes = [permissions.AllowAny]
-
-class WorkViewSet(viewsets.ModelViewSet):
-    queryset = Work.objects.all()
-    serializer_class = WorkSerializer
-    permission_classes = [permissions.AllowAny]
-
-class PortfolioViewSet(viewsets.ModelViewSet):
-    queryset = Portfolio.objects.all()
-    serializer_class = PortfolioSerializer
-    permission_classes = [permissions.AllowAny]
-
-# CRUD operations for users posts
+# users links
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
@@ -113,10 +78,52 @@ class PostViewSet(viewsets.ModelViewSet):
         self.perform_update(serializer)
         return Response(serializer.data)
 
-# filters users posts
+# filters users links
 class UserPostViewSet(PostViewSet):
     def get_queryset(self):
         username = self.kwargs['username']
         user = get_object_or_404(User, username=username)
         queryset = Post.objects.filter(author=user)
         return queryset
+
+# This is for practice
+class PortfolioViewSet(viewsets.ModelViewSet):
+    queryset = Portfolio.objects.all()
+    serializer_class = PortfolioSerializer
+    permission_classes = [permissions.AllowAny]
+
+# profile picture
+class ProfileImageViewSet(viewsets.ModelViewSet):
+    queryset = ProfileImage.objects.all()
+    serializer_class = ProfileImageSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(user=self.request.user)
+
+    def put(self, request, pk, *args, **kwargs):
+        profile_image = self.get_object()
+        if profile_image.user == request.user:
+            profile_image.profile_picture.delete()
+            profile_image.profile_picture = request.FILES['profile_picture']
+            profile_image.save()
+            serializer = self.get_serializer(profile_image)
+            return Response(serializer.data)
+        else:
+            return Response({"error": "You are not authorized to update this profile image."}, status=status.HTTP_403_FORBIDDEN)
+
+class ProfileImageDetailView(APIView):
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+
+    def get(self, request, pk):
+        try:
+            profile_image = ProfileImage.objects.get(pk=pk)
+            image_path = profile_image.image.path
+            with open(image_path, 'rb') as f:
+                response = HttpResponse(f.read(), content_type='image/jpeg')
+            return response
+        except ProfileImage.DoesNotExist:
+            return HttpResponseNotFound()

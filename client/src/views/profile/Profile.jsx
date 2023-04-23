@@ -3,7 +3,7 @@ import "./profile.css";
 import Links from "../../components/links/Links";
 import Error from "../../components/error/Error";
 
-const Profile = ({ postsData }) => {
+const Profile = ({ postsData, profilePictureData }) => {
   // This gets the username put into the url, it checks if there is a / at the end or not.
   const path = window.location.pathname.split("/");
   const username = path.pop();
@@ -36,13 +36,22 @@ const Profile = ({ postsData }) => {
       });
   }, [profileName]);
 
+  let profilePic = profilePictureData.filter(
+    (pic) => pic.author_username == profileName
+  );
+  console.log(profilePic);
+
   return (
     <div>
       {isUser ? (
         <>
           <div className="homeProfileContainer">
             <img
-              src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              src={
+                !profilePic[0].image
+                  ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                  : profilePic[0].image
+              }
               className="homeProfileImage"
             />
             <h2 className="homeProfileUsername">{profileName}</h2>

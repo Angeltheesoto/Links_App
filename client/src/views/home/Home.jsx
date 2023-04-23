@@ -4,7 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import Links from "../../components/links/Links";
 import axios from "axios";
 
-const Home = ({ postsData }) => {
+const Home = ({ postsData, profilePictureData }) => {
   // Will need this to make requests to preform CRUD operations on data.
   const { user } = useContext(AuthContext);
   let username = localStorage.getItem("username");
@@ -89,11 +89,19 @@ const Home = ({ postsData }) => {
       });
   };
 
+  let profilePic = profilePictureData.filter(
+    (pic) => pic.author_username == username
+  );
+
   return (
     <div className="HomeContainer">
       <div className="homeProfileContainer">
         <img
-          src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+          src={
+            !profilePic[0].image
+              ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+              : profilePic[0].image
+          }
           className="homeProfileImage"
         />
         <h2 className="homeProfileUsername">{username}</h2>
