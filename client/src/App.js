@@ -9,7 +9,6 @@ import { Container } from "react-bootstrap";
 import MyNavbar from "./components/nav/Nav";
 import Register from "./views/register/Register";
 import Login from "./views/login/Login";
-import PortfolioPage from "./views/portfolio/PortfolioPage";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./views/home/Home";
 import Profile from "./views/profile/Profile";
@@ -19,11 +18,10 @@ function App() {
   const { user } = useContext(AuthContext);
 
   // ?fetch data ----------------------->>>>
-  const [portfolio, setPortfolio] = useState([]);
   const [posts, setPosts] = useState([]);
   const [profilePic, setProfilePic] = useState([]);
 
-  const dataUrl = ["/api-portfolio", "/api-posts", "/profile-images"];
+  const dataUrl = ["/api-posts", "/profile-images"];
   let config = {
     method: "GET",
     headers: {
@@ -42,10 +40,9 @@ function App() {
         await axios
           .all(dataUrl.map((promise) => axios.get(promise, config)))
           .then(
-            axios.spread((res1, res2, res3) => {
-              setPortfolio((prev) => (prev = res1.data));
-              setPosts((prev) => (prev = res2.data));
-              setProfilePic((prev) => (prev = res3.data));
+            axios.spread((res1, res2) => {
+              setPosts((prev) => (prev = res1.data));
+              setProfilePic((prev) => (prev = res2.data));
             })
           );
         // .then(
@@ -87,10 +84,6 @@ function App() {
               <Route
                 path="/register"
                 element={user ? <Navigate to="/" /> : <Register />}
-              />
-              <Route
-                path="/portfolio"
-                element={<PortfolioPage portfolioData={portfolio} />}
               />
               <Route
                 path="/profile/:username"

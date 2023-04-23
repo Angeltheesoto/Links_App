@@ -1,1 +1,24 @@
+.navButton {
+  margin: 0 !important;
+}
 
+.navLinkContainerLeft {
+  display: flex;
+}
+
+.me-auto {
+  width: 100%;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 991px) {
+  .navLinkContainerLeft {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
+  .navLinkContainerRight {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+}

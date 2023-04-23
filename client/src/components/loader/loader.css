@@ -1,0 +1,14 @@
+.loaderContainer {
+  display: flex;
+  width: auto;
+  height: calc(100vh - 3.8rem);
+  justify-content: center;
+  align-items: center;
+}
+
+.loaderHeading {
+  font-size: 5rem;
+  color: white;
+  text-align: center;
+  margin: 0 auto;
+}

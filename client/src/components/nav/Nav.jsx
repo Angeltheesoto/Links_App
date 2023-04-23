@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -8,10 +8,10 @@ import "./nav.css";
 function MyNavbar({ user }) {
   const { user: currentUser, dispatch } = useContext(AuthContext);
   const logOut = () => {
+    logoutCall(dispatch);
     if (localStorage.getItem("username")) {
       localStorage.setItem("username", null);
     }
-    logoutCall(dispatch);
   };
 
   return (
@@ -23,18 +23,30 @@ function MyNavbar({ user }) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Link to="/portfolio" className="nav-link">
-              <Nav>Portfolio</Nav>
-            </Link>
             {currentUser ? (
-              <Link
-                to={"/login"}
-                style={{ textDecoration: "none", width: "6rem" }}
-              >
-                <div onClick={logOut} className="linksButton del">
-                  Log out
+              <React.Fragment>
+                <div className="navLinkContainerLeft">
+                  <Link to="/" className="nav-link">
+                    <Nav>Home</Nav>
+                  </Link>
+                  <Link to="/" className="nav-link">
+                    <Nav>Home</Nav>
+                  </Link>
                 </div>
-              </Link>
+                <div className="navLinkContainerRight">
+                  <Link
+                    to={"/register"}
+                    style={{
+                      textDecoration: "none",
+                      width: "fit-content",
+                    }}
+                  >
+                    <div onClick={logOut} className="linksButton del navButton">
+                      Log out
+                    </div>
+                  </Link>
+                </div>
+              </React.Fragment>
             ) : null}
           </Nav>
         </Navbar.Collapse>
