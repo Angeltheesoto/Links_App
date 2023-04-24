@@ -72,6 +72,24 @@
   padding: 2rem 1rem;
 }
 
+.homeEditProfilePic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  height: 1rem;
+  width: 1rem;
+  padding: 15px;
+  border-radius: 100%;
+  position: absolute;
+  margin: 2rem 0 0 4rem;
+  border: 2px solid #92fe9d;
+}
+
+.homeEditProfilePic:hover {
+  cursor: pointer;
+}
+
 /* BUTTON */
 
 .homeBtnContainer {

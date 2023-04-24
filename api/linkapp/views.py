@@ -9,8 +9,8 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.models import AuthToken
 from knox.views import LoginView as knoxLoginView
 
-from .models import Portfolio, Post, ProfileImage
-from .serializers import PortfolioSerializer, UserSerializer, RegisterSerializer, PostSerializer, ProfileImageSerializer
+from .models import Post, ProfileImage
+from .serializers import UserSerializer, RegisterSerializer, PostSerializer, ProfileImageSerializer
 
 from rest_framework.views import APIView
 
@@ -86,13 +86,7 @@ class UserPostViewSet(PostViewSet):
         queryset = Post.objects.filter(author=user)
         return queryset
 
-# This is for practice
-class PortfolioViewSet(viewsets.ModelViewSet):
-    queryset = Portfolio.objects.all()
-    serializer_class = PortfolioSerializer
-    permission_classes = [permissions.AllowAny]
-
-# profile picture
+# CRUD - profile pictures
 class ProfileImageViewSet(viewsets.ModelViewSet):
     queryset = ProfileImage.objects.all()
     serializer_class = ProfileImageSerializer
@@ -115,6 +109,7 @@ class ProfileImageViewSet(viewsets.ModelViewSet):
         else:
             return Response({"error": "You are not authorized to update this profile image."}, status=status.HTTP_403_FORBIDDEN)
 
+# gets individual profile picture
 class ProfileImageDetailView(APIView):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
 

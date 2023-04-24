@@ -11,9 +11,6 @@ router.register(r'api-users', views.UserViewSet)
 router.register(r'api-posts', views.PostViewSet)
 router.register(r'profile-images', views.ProfileImageViewSet)
 
-# This is for practice
-router.register(r'api-portfolio', views.PortfolioViewSet)
-
 urlpatterns = [
     path('', include(router.urls)),
     path('api/register/', views.RegisterAPI.as_view()),
@@ -31,5 +28,6 @@ urlpatterns = [
     # Checks if user exists
     path('api-users/<str:username>/exists/', views.UserViewSet.as_view({'get': 'username_exists'})),
 
+    # profile images
     path('profile-images/<uuid:pk>/', views.ProfileImageDetailView.as_view(), name='profile_image_detail'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

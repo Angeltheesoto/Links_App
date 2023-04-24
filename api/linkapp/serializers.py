@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import Portfolio, Post, ProfileImage
+from .models import Post, ProfileImage
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,10 +28,4 @@ class PostSerializer(serializers.ModelSerializer):
         model = Post
         fields = '__all__'
         read_only_fields = ['id', 'author', 'author_username', 'created_at']
-
-# This is for practice
-class PortfolioSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Portfolio
-        fields = '__all__'
 

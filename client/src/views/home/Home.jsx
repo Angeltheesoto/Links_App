@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./home.css";
 import { AuthContext } from "../../context/AuthContext";
 import Links from "../../components/links/Links";
 import axios from "axios";
+import AddIcon from "@material-ui/icons/Add";
 
 const Home = ({ postsData, profilePictureData }) => {
-  // Will need this to make requests to preform CRUD operations on data.
   const { user } = useContext(AuthContext);
   let username = localStorage.getItem("username");
   // This is removing the quotes around the value in localstorage.
@@ -13,34 +13,64 @@ const Home = ({ postsData, profilePictureData }) => {
     username = username.replace(/^"(.*)"$/, "$1");
   }
 
+  // FIlTER DATA
   const filterPosts = postsData.filter(
     (post) => post.author_username === username
   );
+  const profilePic = profilePictureData.filter(
+    (pic) => pic.author_username == username
+  );
 
-  // CRUD OPERATIONS
-  const [isEdit, setIsEdit] = useState(false);
-  const [editId, setEditId] = useState(null);
+  // VARIABLES
   const [isAdd, setIsAdd] = useState(true);
+  const [isEdit, setIsEdit] = useState(false);
+  const [isPic, setIsPic] = useState(false);
+  const [editId, setEditId] = useState(null);
+  const [picId, setPicId] = useState(null);
+  const [newPicData, setNewPicData] = useState(null);
   const [formData, setFormData] = useState({
     title: "",
     content: "",
     brand: "other",
     url: "",
   });
+
+  // Assigns the users picture id.
+  useEffect(() => {
+    if (profilePic.length > 0 && profilePic[0].id) {
+      setPicId(profilePic[0].id);
+    }
+  }, [profilePic]);
+
+  // ON CHANGE EVENTS
   const handleChange = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
     });
   };
+  const handlePicChange = (e) => {
+    const file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    setNewPicData(formData);
+  };
 
+  // HEADERS
   const config = {
     headers: {
       Authorization: "Token " + user.token,
       "Content-Type": "application/json",
     },
   };
-  // ADD
+  const picConfig = {
+    headers: {
+      Authorization: "Token " + user.token,
+      "Content-Type": "multipart/form-data",
+    },
+  };
+
+  // ADD LINK
   const handleAdd = (e) => {
     setIsAdd(!isAdd);
   };
@@ -57,7 +87,8 @@ const Home = ({ postsData, profilePictureData }) => {
         console.log(err);
       });
   };
-  // EDIT
+
+  // EDIT LINK
   const handleEdit = (id) => {
     setIsEdit(!isEdit);
     setEditId(id);
@@ -76,12 +107,12 @@ const Home = ({ postsData, profilePictureData }) => {
         console.log(err);
       });
   };
-  // DELETE
+
+  // DELETE LINK
   const handleDelete = (id) => {
     axios
       .delete(`http://localhost:8000/api-posts/${id}/`, config)
       .then((res) => {
-        console.log(res.data);
         window.location.reload();
       })
       .catch((err) => {
@@ -89,9 +120,40 @@ const Home = ({ postsData, profilePictureData }) => {
       });
   };
 
-  let profilePic = profilePictureData.filter(
-    (pic) => pic.author_username == username
-  );
+  // EDIT PROFILE PICTURE
+  const handleProfilePic = (e) => {
+    setIsPic(!isPic);
+  };
+  const handlePicEdit = (e) => {
+    e.preventDefault();
+    setIsPic(!isPic);
+    if (picId) {
+      axios
+        .put(
+          `http://localhost:8000/profile-images/${picId}/`,
+          newPicData,
+          picConfig
+        )
+        .then((res) => {
+          console.log(res.data);
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      axios
+        .post("http://localhost:8000/profile-images/", newPicData, picConfig)
+        .then((res) => {
+          console.log(res.data);
+          setPicId(res.data.id);
+          window.location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
 
   return (
     <div className="HomeContainer">
@@ -104,10 +166,49 @@ const Home = ({ postsData, profilePictureData }) => {
           }
           className="homeProfileImage"
         />
+
+        <span onClick={handleProfilePic} className="homeEditProfilePic">
+          <AddIcon />
+        </span>
+
+        {!isPic ? null : (
+          <div className="editContainer">
+            <form className="homeForm" onSubmit={handlePicEdit}>
+              <div className="registerFormContainer">
+                <h1 className="registerHeading">Profile Picture</h1>
+                <div className="labelContainer">
+                  <div className="form-floating mb-3">
+                    <input
+                      className="form-control"
+                      id="floatingInput"
+                      type="file"
+                      name="image"
+                      placeholder="link"
+                      onChange={handlePicChange}
+                      accept="image/*"
+                    />
+                  </div>
+                </div>
+                <div className="homeBtnContainer2">
+                  <button type="submit" className="registerBtn">
+                    Add Profile Picture
+                  </button>
+                  <button
+                    onClick={handleProfilePic}
+                    className="registerBtn homeBtnCancel"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        )}
+
         <h2 className="homeProfileUsername">{username}</h2>
       </div>
 
-      {/* CREATE */}
+      {/* CREATE LINK */}
       <div className="homeBtnContainer">
         <button
           type="submit"
@@ -190,7 +291,7 @@ const Home = ({ postsData, profilePictureData }) => {
         </div>
       )}
 
-      {/* READ, UPDATE, DELETE */}
+      {/* READ, UPDATE, AND DELETE LINK */}
       {!filterPosts ? (
         "Loading.."
       ) : (
@@ -272,18 +373,20 @@ const Home = ({ postsData, profilePictureData }) => {
                 </form>
               </div>
             ) : (
-              <div className={isEdit ? "editHide" : ""}>
-                <Links
-                  url={i.url}
-                  title={i.title}
-                  text={i.content}
-                  brand={i.brand}
-                  uniKey={i.id}
-                  edit="edit"
-                  editevent={() => handleEdit(i.id)}
-                  del="delete"
-                  deleteevent={() => handleDelete(i.id)}
-                />
+              <div className={isPic ? "editHide" : ""}>
+                <div className={isEdit ? "editHide" : ""}>
+                  <Links
+                    url={i.url}
+                    title={i.title}
+                    text={i.content}
+                    brand={i.brand}
+                    uniKey={i.id}
+                    edit="edit"
+                    editevent={() => handleEdit(i.id)}
+                    del="delete"
+                    deleteevent={() => handleDelete(i.id)}
+                  />
+                </div>
               </div>
             )
           )}

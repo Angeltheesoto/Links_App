@@ -40,7 +40,6 @@ const Profile = ({ postsData, profilePictureData }) => {
   let profilePic = profilePictureData.filter(
     (pic) => pic.author_username == profileName
   );
-  console.log(profilePic);
 
   return (
     <div>

@@ -38,11 +38,3 @@ class ProfileImage(models.Model):
         if not self.author_username:
             self.author_username = self.author.username
         super().save(*args, **kwargs)
-
-# This is for practice
-class Portfolio(models.Model):
-    title = models.CharField(max_length=255)
-    description = models.TextField()
-    image = models.ImageField(upload_to='uploads/')
-    url = models.URLField()
-    ordinal = models.IntegerField()

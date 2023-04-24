@@ -64,7 +64,7 @@ function App() {
     <div className="App">
       {
         <BrowserRouter>
-          <MyNavbar />
+          <MyNavbar profilePictureData={profilePic} />
           <Container>
             <Routes>
               <Route
