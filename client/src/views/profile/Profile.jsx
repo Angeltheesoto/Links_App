@@ -20,7 +20,9 @@ const Profile = ({ postsData, profilePictureData }) => {
 
   // Checks if username exists in database
   const [isUser, setIsUser] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
+    setIsLoading(true);
     fetch(`/api-users/${profileName}/exists/`)
       .then((response) => {
         if (response.ok) {
@@ -31,6 +33,9 @@ const Profile = ({ postsData, profilePictureData }) => {
       })
       .then((data) => {
         setIsUser(data.exists);
+      })
+      .then(() => {
+        setIsLoading(false);
       })
       .catch((error) => {
         console.error(error);
@@ -70,9 +75,10 @@ const Profile = ({ postsData, profilePictureData }) => {
             )
           )}
         </>
+      ) : isLoading ? (
+        <Loader />
       ) : (
         <Error />
-        // <Loader />
       )}
     </div>
   );

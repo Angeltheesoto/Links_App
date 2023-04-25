@@ -1,6 +1,6 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
 import { logoutCall } from "../../apiCalls";
 import "./nav.css";
@@ -17,21 +17,17 @@ function MyNavbar({ user, profilePictureData }) {
 
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-
-  // const filteredData = profilePictureData.filter((item) =>
-  //   item.name.toLowerCase().includes(searchQuery.toLowerCase())
-  // );
-
+  const history = useNavigate();
   const handleSearch = () => {
     setIsOpen(!isOpen);
-    // console.log(isOpen);
+    setSearchQuery("");
   };
-  console.log(searchQuery);
-
-  let profilePic = profilePictureData.filter(
-    (pic) => pic.author_username == searchQuery
-  );
-  console.log(profilePictureData);
+  const handleReload = (username) => {
+    setIsOpen(!isOpen);
+    setSearchQuery("");
+    // window.location.reload();
+    history.push(`/profile/${username}`);
+  };
 
   return (
     <>
@@ -72,8 +68,6 @@ function MyNavbar({ user, profilePictureData }) {
                         }
                       />
                     </div>
-                    {/* <Link to="" className="nav-link">
-            </Link> */}
 
                     <Link
                       to={"/register"}
@@ -98,24 +92,34 @@ function MyNavbar({ user, profilePictureData }) {
       </Navbar>
       <Container className={isOpen ? "outerContainer" : "hideOuterContainer"}>
         <div className="usersContainer">
-          {profilePictureData?.map((e) => (
-            <div className="usersLink">
-              <img src={e.image} />
-              <p>{e.author_username}</p>
-            </div>
-          ))}
-          {/* <img
-              src={
-                !profilePic || profilePic.length === 0
-                  ? "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
-                  : profilePic[0].image
-              }
-            />
-            <p>
-              {!profilePic || profilePic.length === 0
-                ? "name"
-                : profilePic[0].author_username}
-            </p> */}
+          {!searchQuery ? (
+            <p className="usersSearchingDefaultText">search for a user</p>
+          ) : (
+            profilePictureData &&
+            profilePictureData
+              .filter((filteredPic) =>
+                filteredPic.author_username
+                  .toLowerCase()
+                  .includes(searchQuery.toLowerCase())
+              )
+              .map((e) => (
+                <Link
+                  to={`/profile/${e.author_username}`}
+                  style={{
+                    textDecoration: "none",
+                    width: "fit-content",
+                    color: "black",
+                  }}
+                  onClick={() => handleReload(e.author_username)}
+                  key={e.id}
+                >
+                  <div className="usersLink">
+                    <img src={e.image} alt="profile image" />
+                    <p>{e.author_username}</p>
+                  </div>
+                </Link>
+              ))
+          )}
         </div>
       </Container>
     </>
