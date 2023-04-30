@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext";
@@ -45,8 +45,8 @@ function MyNavbar({ user, profilePictureData }) {
                     <Link to="/" className="nav-link">
                       <Nav>Home</Nav>
                     </Link>
-                    <Link to="/" className="nav-link">
-                      <Nav>Home</Nav>
+                    <Link to="/about-us" className="nav-link">
+                      <Nav>About Us</Nav>
                     </Link>
                   </div>
                   <div className="navLinkContainerRight">

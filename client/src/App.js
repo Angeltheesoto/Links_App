@@ -13,6 +13,8 @@ import { AuthContext } from "./context/AuthContext";
 import Home from "./views/home/Home";
 import Profile from "./views/profile/Profile";
 import Error from "./components/error/Error";
+import Footer from "./components/footer/Footer";
+import Aboutus from "./components/aboutus/Aboutus";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -91,8 +93,10 @@ function App() {
                   <Profile postsData={posts} profilePictureData={profilePic} />
                 }
               />
+              <Route path="/about-us" element={<Aboutus />} />
               <Route path="*" element={<Error />} />
             </Routes>
+            <Footer />
           </Container>
         </BrowserRouter>
       }

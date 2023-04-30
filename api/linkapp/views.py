@@ -14,6 +14,10 @@ from .serializers import UserSerializer, RegisterSerializer, PostSerializer, Pro
 
 from rest_framework.views import APIView
 
+from django.core.files.base import ContentFile
+from django.conf import settings
+import os
+
 # Users API
 """
 API endpoint that allows users to be viewed or edited.
@@ -31,10 +35,23 @@ class UserViewSet(viewsets.ModelViewSet):
 class RegisterAPI(generics.GenericAPIView):
     serializer_class = RegisterSerializer
 
+    def create_default_profile_image(self, user):
+        default_image_path = os.path.join(settings.MEDIA_ROOT,'profile_picture', 'default_profile.png')
+        with open(default_image_path, 'rb') as f:
+            default_image = ContentFile(f.read())
+
+        profile_image = ProfileImage(author=user)
+        profile_image.image.save('default_profile.png', default_image, save=True)
+        return profile_image
+
     def post(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         user = serializer.save()
+
+        # Create default profile image
+        self.create_default_profile_image(user)
+
         return Response({
             "user": UserSerializer(user, context=self.get_serializer_context()).data,
             "token": AuthToken.objects.create(user)[1]
@@ -78,7 +95,7 @@ class PostViewSet(viewsets.ModelViewSet):
         self.perform_update(serializer)
         return Response(serializer.data)
 
-# filters users links
+# filters users links by username
 class UserPostViewSet(PostViewSet):
     def get_queryset(self):
         username = self.kwargs['username']
@@ -96,18 +113,25 @@ class ProfileImageViewSet(viewsets.ModelViewSet):
         serializer.save(author=self.request.user)
 
     def perform_update(self, serializer):
-        serializer.save(user=self.request.user)
+        profile_image = serializer.instance
+        profile_picture = profile_image.image
+        if profile_picture:
+            # delete old profile picture if it's not the default one
+            if not os.path.basename(profile_picture.name) == 'default_profile.png':
+                profile_picture.delete(save=False)
+            # save the new profile picture
+            new_profile_picture = self.request.FILES.get('profile_picture')
+            if new_profile_picture:
+                profile_image.image = new_profile_picture
+            serializer.save()
 
     def put(self, request, pk, *args, **kwargs):
         profile_image = self.get_object()
-        if profile_image.user == request.user:
-            profile_image.profile_picture.delete()
-            profile_image.profile_picture = request.FILES['profile_picture']
-            profile_image.save()
-            serializer = self.get_serializer(profile_image)
-            return Response(serializer.data)
+        if profile_image.author == request.user:
+            return self.update(request, *args, **kwargs)
         else:
             return Response({"error": "You are not authorized to update this profile image."}, status=status.HTTP_403_FORBIDDEN)
+
 
 # gets individual profile picture
 class ProfileImageDetailView(APIView):
