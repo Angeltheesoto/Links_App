@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-=w5g%)$732x4$33_w)saw@lv$7ji!zlud6z09(=+@msj6x9ht('
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_WHITELIST = ['http://localhost:3000',  'http://127.0.0.1:3000']
@@ -137,3 +137,6 @@ REST_FRAMEWORK = {
     'knox.auth.TokenAuthentication'
     ],
 }
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

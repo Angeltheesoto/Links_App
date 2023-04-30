@@ -1,0 +1,24 @@
+.error404Container {
+  width: 100%;
+  height: calc(100vh - 4rem);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.error404Heading {
+  background-image: linear-gradient(to bottom right, #e32c58, #ffb199);
+  background-repeat: repeat;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 10rem;
+  text-align: center;
+  text-transform: uppercase;
+  -webkit-font-smoothing: antialiased;
+}
+
+.error404Text {
+  font-size: 3rem;
+  color: white;
+}

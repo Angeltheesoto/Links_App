@@ -1,0 +1,133 @@
+.navButton {
+  margin: 0 !important;
+}
+
+.navLinkContainerLeft {
+  display: flex;
+}
+
+.navLinkContainerRight {
+  display: flex;
+}
+
+.me-auto {
+  width: 100%;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 991px) {
+  .navLinkContainerLeft {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+
+  .navLinkContainerRight {
+    flex-direction: column;
+    margin: 0 auto;
+  }
+}
+
+/* SEARCHBAR */
+.navSearchContainer {
+  display: flex;
+  width: auto;
+  height: auto;
+  justify-content: right;
+  align-items: center;
+}
+
+.searchIcon:hover {
+  cursor: pointer;
+}
+
+.searchBar {
+  border: 0;
+  border-bottom: 1px solid black;
+  margin-right: 10px;
+  background-color: transparent;
+  width: 100%;
+  transition: 0.5s ease-in-out;
+}
+
+.searchBar:focus {
+  outline: none;
+}
+
+.closeSearchBar {
+  width: 0;
+  transition: 0.5s ease-in-out;
+  border-bottom: 1px solid transparent;
+}
+
+.outerContainer {
+  width: 100%;
+  display: flex;
+  justify-content: right;
+  margin-bottom: -15rem;
+}
+
+.usersContainer {
+  background-color: rgb(248, 249, 250);
+  padding: 1rem;
+  width: 20rem;
+  height: 14rem;
+  margin-top: 1rem;
+  border-radius: 10px;
+  z-index: 9999;
+  overflow: scroll;
+  box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.33);
+}
+
+.usersContainer::-webkit-scrollbar {
+  width: 0.3rem;
+  height: 0.3rem;
+}
+.usersContainer::-webkit-scrollbar-track {
+  background-color: transparent;
+  border-radius: 10px;
+}
+.usersContainer::-webkit-scrollbar-thumb {
+  background-color: lightgray;
+  border-radius: 10px;
+}
+.usersContainer::-webkit-scrollbar-corner {
+  display: none;
+}
+
+.usersLink {
+  height: 3rem;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  padding: 3px 1rem;
+  margin-bottom: 5px;
+}
+
+.usersLink:hover {
+  background-color: rgba(230, 230, 230, 0.8);
+  cursor: pointer;
+}
+
+.usersLink img {
+  height: 2rem;
+  width: 2rem;
+  border-radius: 100%;
+}
+
+.usersLink p {
+  margin: 0;
+  padding-left: 2rem;
+}
+
+.hideOuterContainer {
+  display: none;
+}
+
+.usersSearchingDefaultText {
+  text-align: center;
+  font-size: 2.3rem;
+  font-weight: 500;
+  padding-top: 4rem;
+  color: lightgray;
+  cursor: default;
+}

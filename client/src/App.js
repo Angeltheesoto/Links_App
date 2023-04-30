@@ -1,7 +1,7 @@
 // dependencies
 import React, { useContext, useEffect, useState } from "react";
 import "./App.css";
-import { BrowserRouter, Routes, Route, redirect } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import axios from "axios";
 
 // components
@@ -9,26 +9,31 @@ import { Container } from "react-bootstrap";
 import MyNavbar from "./components/nav/Nav";
 import Register from "./views/register/Register";
 import Login from "./views/login/Login";
-import EducationPage from "./views/education/EducationPage";
-import WorkPage from "./views/work/WorkPage";
-import PortfolioPage from "./views/portfolio/PortfolioPage";
 import { AuthContext } from "./context/AuthContext";
 import Home from "./views/home/Home";
+import Profile from "./views/profile/Profile";
+import Error from "./components/error/Error";
+import Footer from "./components/footer/Footer";
+import Aboutus from "./components/aboutus/Aboutus";
 
 function App() {
-  // ?fetch data ----------------------->>>>
-  const [education, setEducation] = useState([]);
-  const [work, setWork] = useState([]);
-  const [portfolio, setPortfolio] = useState([]);
+  const { user } = useContext(AuthContext);
 
-  const dataUrl = ["/education", "/work", "/portfolio"];
-  const config = {
+  // ?fetch data ----------------------->>>>
+  const [posts, setPosts] = useState([]);
+  const [profilePic, setProfilePic] = useState([]);
+
+  const dataUrl = ["/api-posts", "/profile-images"];
+  let config = {
     method: "GET",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
   };
+  if (user !== null) {
+    config.headers.Authorization = `Token ${user.token}`;
+  }
 
   // This fetches data from more than one url
   useEffect(() => {
@@ -37,16 +42,16 @@ function App() {
         await axios
           .all(dataUrl.map((promise) => axios.get(promise, config)))
           .then(
-            axios.spread((res1, res2, res3) => {
-              setEducation((prev) => (prev = res1.data));
-              setWork((prev) => (prev = res2.data));
-              setPortfolio((prev) => (prev = res3.data));
+            axios.spread((res1, res2) => {
+              setPosts((prev) => (prev = res1.data));
+              setProfilePic((prev) => (prev = res2.data));
             })
           );
         // .then(
         //   console.log("education: ", education),
         //   console.log("work: ", work),
-        //   console.log("portfolio: ", portfolio)
+        //   console.log("portfolio: ", portfolio),
+        //   console.log("posts: ", posts)
         // );
       } catch (err) {
         console.log(err);
@@ -56,32 +61,42 @@ function App() {
   }, []);
 
   // ?fetch data ----------------------->>>>
-  const { user } = useContext(AuthContext);
 
   return (
     <div className="App">
       {
         <BrowserRouter>
-          <MyNavbar />
+          <MyNavbar profilePictureData={profilePic} />
           <Container>
             <Routes>
-              <Route path="/" element={user ? <Home /> : <Register />} />
-              <Route path="/login" element={user ? <Home /> : <Login />} />
+              <Route
+                path="/"
+                element={
+                  user ? (
+                    <Home postsData={posts} profilePictureData={profilePic} />
+                  ) : (
+                    <Register />
+                  )
+                }
+              />
+              <Route
+                path="/login"
+                element={user ? <Navigate to="/" /> : <Login />}
+              />
               <Route
                 path="/register"
-                element={user ? <Home /> : <Register />}
+                element={user ? <Navigate to="/" /> : <Register />}
               />
-
               <Route
-                path="/education"
-                element={<EducationPage educationData={education} />}
+                path="/profile/:username"
+                element={
+                  <Profile postsData={posts} profilePictureData={profilePic} />
+                }
               />
-              <Route path="/work" element={<WorkPage workData={work} />} />
-              <Route
-                path="/portfolio"
-                element={<PortfolioPage portfolioData={portfolio} />}
-              />
+              <Route path="/about-us" element={<Aboutus />} />
+              <Route path="*" element={<Error />} />
             </Routes>
+            <Footer />
           </Container>
         </BrowserRouter>
       }

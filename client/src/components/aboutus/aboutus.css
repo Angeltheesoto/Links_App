@@ -1,0 +1,12 @@
+.aboutusContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 4rem 5rem;
+}
+
+.aboutusContainer h1 {
+  margin-bottom: 3rem;
+  font-size: 4rem;
+}

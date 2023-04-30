@@ -1,0 +1,108 @@
+.homeProfileContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem 0;
+}
+
+.homeProfileImage {
+  height: 7rem;
+  width: 7rem;
+  border-radius: 100px;
+}
+
+.homeProfileUsername {
+  margin-top: 1rem;
+}
+
+/* EDIT STYLES */
+
+.editContainer {
+  position: fixed;
+  display: grid;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(255, 255, 255, 0.523);
+  align-items: center;
+}
+
+.homeForm {
+  padding: 1rem;
+  display: flex;
+  flex-flow: column;
+  margin: 0 auto;
+  width: 30rem;
+}
+
+.homeForm label {
+  display: flex;
+  flex-flow: column;
+  margin-bottom: 1rem;
+}
+
+.homeBtnAddContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.homeBtn {
+  margin: 0 10px;
+  border-radius: 10px;
+  border: none;
+  padding: 10px;
+}
+
+.homeEdit {
+  border: 3px solid lightgreen;
+  color: black;
+  background-color: rgba(255, 255, 255, 0.412);
+}
+
+.homeDel {
+  background-color: lightcoral;
+  color: white;
+}
+
+.homeBtnContainer2 {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+}
+
+.homeEditProfilePic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  height: 1rem;
+  width: 1rem;
+  padding: 15px;
+  border-radius: 100%;
+  position: absolute;
+  margin: 2rem 0 0 4rem;
+  border: 2px solid #92fe9d;
+}
+
+.homeEditProfilePic:hover {
+  cursor: pointer;
+}
+
+/* BUTTON */
+
+.homeBtnContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.editHide {
+  display: none;
+}
+
+.homeBtnCancel {
+  background-image: linear-gradient(to bottom right, #e32c58, #ffb199);
+  margin-top: 1rem;
+}

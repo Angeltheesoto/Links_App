@@ -34,6 +34,18 @@ function Register() {
           },
           dispatch
         );
+        if (!localStorage.getItem("username")) {
+          localStorage.setItem(
+            "username",
+            JSON.stringify(username.current.value)
+          );
+        } else {
+          localStorage.setItem(
+            "username",
+            JSON.stringify(username.current.value)
+          );
+        }
+
         // navigate("/login");
       } catch (err) {
         console.error(err);
@@ -44,61 +56,79 @@ function Register() {
   return (
     <div className="registerContainer">
       <form className="registerForm" onSubmit={handleClick}>
-        <div className="labelContainer">
-          <label>
-            Username :
-            <input
-              type="text"
-              name="username"
-              placeholder="username"
-              ref={username}
-              required
-            />
-          </label>
-          <label>
-            Email :
-            <input
-              type="text"
-              name="email"
-              placeholder="email"
-              ref={email}
-              required
-            />
-          </label>
-          <label>
-            Password :
-            <input
-              type="password"
-              name="password"
-              placeholder="password"
-              ref={password}
-              required
-            />
-          </label>
-          <label>
-            Confirm Password :
-            <input
-              type="password"
-              name="confirmPassword"
-              placeholder="confirm password"
-              ref={confirmPassword}
-              required
-            />
-          </label>
-          <button type="submit" disabled={isFetching}>
-            {isFetching ? "Loading.." : "Create Account"}
-          </button>
-          {/* <button type="submit">Create Account</button> */}
-          <Link
-            to="/login"
-            style={{
-              textDecoration: "none",
-              width: "60%",
-              alignSelf: "center",
-            }}
-          >
-            <button className="loginRegisterButton">Log In</button>
-          </Link>
+        <div className="registerFormContainer">
+          <h1 className="registerHeading">Register</h1>
+          <div className="labelContainer ">
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                id="floatingInput"
+                type="text"
+                name="username"
+                placeholder="username"
+                ref={username}
+                required
+              />
+              <label for="floatingInput">username</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                id="floatingInput2"
+                type="text"
+                name="email"
+                placeholder="email"
+                ref={email}
+                required
+              />
+              <label for="floatingInput2">Email</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                id="floatingInput3"
+                type="password"
+                name="password"
+                placeholder="password"
+                ref={password}
+                required
+              />
+              <label for="floatingInput3">Password</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                className="form-control"
+                id="floatingInput4"
+                type="password"
+                name="confirmPassword"
+                placeholder="confirm password"
+                ref={confirmPassword}
+                required
+              />
+              <label for="floatingInput4">Confirm Password</label>
+            </div>
+            <div className="registerBtnContainer">
+              <button
+                type="submit"
+                disabled={isFetching}
+                className="registerBtn"
+              >
+                {isFetching ? "Loading.." : "Register"}
+              </button>
+              <div className="registerBtnSecondContainer">
+                <p className="registerText">Have an account?</p>
+                <Link
+                  to="/login"
+                  style={{
+                    textDecoration: "none",
+                    height: "fit-content",
+                  }}
+                >
+                  Log In
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>
