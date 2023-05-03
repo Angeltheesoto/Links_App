@@ -55,6 +55,10 @@ function Register() {
 
   return (
     <div className="registerContainer">
+      <div className="registerLogoContainer">
+        <h1 className="registerLogoTitle">HUB</h1>
+        <p className="registerLogoText">The safest place for all your links.</p>
+      </div>
       <form className="registerForm" onSubmit={handleClick}>
         <div className="registerFormContainer">
           <h1 className="registerHeading">Register</h1>

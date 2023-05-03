@@ -6,10 +6,19 @@
   margin: 2rem 0;
 }
 
-.homeProfileImage {
-  height: 7rem;
+.homeImageContainer {
   width: 7rem;
+  height: 7rem;
   border-radius: 100px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeProfileImage {
+  width: auto;
+  height: 7rem;
 }
 
 .homeProfileUsername {

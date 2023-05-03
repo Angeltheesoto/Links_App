@@ -1,6 +1,28 @@
 .registerContainer {
   display: flex;
   height: calc(100vh - 56px);
+
+  justify-content: center;
+  align-items: center;
+}
+
+.registerLogoTitle {
+  font-size: 10rem;
+  color: white;
+}
+
+.registerLogoText {
+  font-size: 2rem;
+}
+
+@media screen and (max-width: 993px) {
+  .registerContainer {
+    flex-direction: column;
+  }
+
+  .registerLogoContainer {
+    margin: 0 0 2rem 0;
+  }
 }
 
 .labelContainer {
