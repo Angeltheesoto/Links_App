@@ -56,7 +56,9 @@ function Register() {
   return (
     <div className="registerContainer">
       <div className="registerLogoContainer">
-        <h1 className="registerLogoTitle">HUB</h1>
+        <Link to="/hub" className="nav-link">
+          <h1 className="registerLogoTitle">HUB</h1>
+        </Link>
         <p className="registerLogoText">The safest place for all your links.</p>
       </div>
       <form className="registerForm" onSubmit={handleClick}>

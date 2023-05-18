@@ -1,3 +1,9 @@
+.homeContainer {
+  min-height: 100vh !important;
+  margin-bottom: 3rem;
+  /* border: 1px solid red; */
+}
+
 .homeProfileContainer {
   display: flex;
   flex-direction: column;
@@ -34,7 +40,12 @@
   bottom: 0;
   left: 0;
   right: 0;
-  background-color: rgba(255, 255, 255, 0.523);
+  /* background-color: rgba(255, 255, 255, 0.523); */
+  background-image: linear-gradient(
+    to bottom right,
+    rgba(146, 254, 157, 0.5),
+    rgba(0, 201, 255, 0.5)
+  );
   align-items: center;
 }
 

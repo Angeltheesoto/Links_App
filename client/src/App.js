@@ -15,6 +15,7 @@ import Profile from "./views/profile/Profile";
 import Error from "./components/error/Error";
 import Footer from "./components/footer/Footer";
 import Aboutus from "./components/aboutus/Aboutus";
+import Hub from "./views/hub/Hub";
 
 function App() {
   const { user } = useContext(AuthContext);
@@ -75,10 +76,11 @@ function App() {
                   user ? (
                     <Home postsData={posts} profilePictureData={profilePic} />
                   ) : (
-                    <Register />
+                    <Navigate to="/hub" />
                   )
                 }
               />
+              <Route path="/hub" element={<Hub />} />
               <Route
                 path="/login"
                 element={user ? <Navigate to="/" /> : <Login />}
@@ -96,8 +98,8 @@ function App() {
               <Route path="/about-us" element={<Aboutus />} />
               <Route path="*" element={<Error />} />
             </Routes>
-            <Footer />
           </Container>
+          <Footer />
         </BrowserRouter>
       }
     </div>

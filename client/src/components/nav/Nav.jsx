@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { logoutCall } from "../../apiCalls";
 import "./nav.css";
 import SearchIcon from "@material-ui/icons/Search";
+import { useLocation } from "react-router-dom";
 
 function MyNavbar({ user, profilePictureData }) {
   const { user: currentUser, dispatch } = useContext(AuthContext);
@@ -29,48 +30,158 @@ function MyNavbar({ user, profilePictureData }) {
     history.push(`/profile/${username}`);
   };
 
+  // Checks if the navLinks are hovered over to display sub-links
+  const [learnIsOpen, setLearnIsOpen] = useState(false);
+  const [discoverIsOpen, setDiscoverIsOpen] = useState(false);
+
+  const location = useLocation();
+  let path = location.pathname.split("/");
+
   return (
     <>
-      <Navbar bg="light" variant="light" expand="lg">
+      <Navbar
+        bg="light"
+        variant="light"
+        expand="lg"
+        className={
+          path[1] == "register" || path[1] == "login" ? "nav-hide" : ""
+        }
+      >
         <Container>
-          <Link to="/" className="nav-link ">
+          <Link to="/" className="nav-link">
             <Navbar.Brand>HUB</Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              {currentUser ? (
-                <React.Fragment>
-                  <div className="navLinkContainerLeft">
-                    <Link to="/" className="nav-link">
-                      <Nav>Home</Nav>
-                    </Link>
-                    <Link to="/about-us" className="nav-link">
-                      <Nav>About Us</Nav>
-                    </Link>
-                  </div>
-                  <div className="navLinkContainerRight">
-                    <div className="navSearchContainer">
-                      <SearchIcon
-                        className="searchIcon"
-                        style={{
-                          fontSize: "2rem",
-                        }}
-                        onClick={handleSearch}
-                      />
-                      <input
-                        type="text"
-                        placeholder="Search user..."
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
-                        className={
-                          isOpen ? "searchBar" : "searchBar closeSearchBar"
-                        }
-                      />
-                    </div>
+              <React.Fragment>
+                <div className="navLinkContainerLeft">
+                  <Link to="/" className="nav-link">
+                    <Nav>Home</Nav>
+                  </Link>
+                  <Link to="/about-us" className="nav-link">
+                    <Nav>About Us</Nav>
+                  </Link>
+                  <Link to="/" className="nav-link ">
+                    <Nav>Templates</Nav>
+                  </Link>
+                  <Link
+                    to="/"
+                    className="nav-link"
+                    onMouseEnter={() => setDiscoverIsOpen(!discoverIsOpen)}
+                    onMouseLeave={() => setDiscoverIsOpen(!discoverIsOpen)}
+                  >
+                    <Nav>Discover</Nav>
 
+                    <div
+                      className={
+                        discoverIsOpen
+                          ? "discoverVisible"
+                          : "hideOuterContainer"
+                      }
+                    >
+                      <div className="usersContainer discoverContainer">
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>HUB for Instagram</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>HUB for Facebook</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>HUB for Twitter</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>HUB for Youtube</p>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </Link>
+                  <Link to="/" className="nav-link">
+                    <Nav>Pricing</Nav>
+                  </Link>
+                  <Link
+                    to="/"
+                    className="nav-link"
+                    onMouseEnter={() => setLearnIsOpen(!learnIsOpen)}
+                    onMouseLeave={() => setLearnIsOpen(!learnIsOpen)}
+                  >
+                    <Nav>Learn</Nav>
+                    <div
+                      className={
+                        learnIsOpen ? "learnVisible " : "hideOuterContainer"
+                      }
+                    >
+                      <div className="usersContainer learnContainer">
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>All Articles</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>Creators</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>Trends</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>Best Prctices</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>Company</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>Product News</p>
+                          </div>
+                        </a>
+                        <a href="#" className="usersLinkP">
+                          <div className="usersLink">
+                            <p>Help</p>
+                          </div>
+                        </a>
+                      </div>
+                    </div>
+                  </Link>
+                </div>
+                <div className="navLinkContainerRight">
+                  <div className="navSearchContainer">
+                    <SearchIcon
+                      className="searchIcon"
+                      style={{
+                        fontSize: "2rem",
+                      }}
+                      onClick={handleSearch}
+                    />
+                    <input
+                      type="text"
+                      placeholder="Search user..."
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      className={
+                        isOpen ? "searchBar" : "searchBar closeSearchBar"
+                      }
+                    />
+                  </div>
+
+                  {currentUser ? (
                     <Link
-                      to={"/register"}
+                      to={"/login"}
                       style={{
                         textDecoration: "none",
                         width: "fit-content",
@@ -78,14 +189,39 @@ function MyNavbar({ user, profilePictureData }) {
                     >
                       <div
                         onClick={logOut}
-                        className="linksButton del navButton"
+                        className="linksButton linksLogout navButton"
                       >
                         Log out
                       </div>
                     </Link>
-                  </div>
-                </React.Fragment>
-              ) : null}
+                  ) : (
+                    <div className="linksLoginSignup">
+                      <Link
+                        to={"/login"}
+                        style={{
+                          textDecoration: "none",
+                          width: "fit-content",
+                        }}
+                      >
+                        <div className="linksButton logIn navButton">
+                          Log in
+                        </div>
+                      </Link>
+                      <Link
+                        to={"/register"}
+                        style={{
+                          textDecoration: "none",
+                          width: "fit-content",
+                        }}
+                      >
+                        <div className="linksButton signUp navButton">
+                          Sign up
+                        </div>
+                      </Link>
+                    </div>
+                  )}
+                </div>
+              </React.Fragment>
             </Nav>
           </Navbar.Collapse>
         </Container>

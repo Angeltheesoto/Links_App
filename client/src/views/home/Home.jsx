@@ -4,6 +4,7 @@ import { AuthContext } from "../../context/AuthContext";
 import Links from "../../components/links/Links";
 import axios from "axios";
 import AddIcon from "@material-ui/icons/Add";
+import RemoveIcon from "@material-ui/icons/Remove";
 
 const Home = ({ postsData, profilePictureData }) => {
   const { user } = useContext(AuthContext);
@@ -156,7 +157,7 @@ const Home = ({ postsData, profilePictureData }) => {
   };
 
   return (
-    <div className="HomeContainer">
+    <div className="homeContainer">
       <div className="homeProfileContainer">
         <div className="homeImageContainer">
           <img
@@ -170,7 +171,7 @@ const Home = ({ postsData, profilePictureData }) => {
         </div>
 
         <span onClick={handleProfilePic} className="homeEditProfilePic">
-          <AddIcon />
+          {!isPic ? <AddIcon /> : <RemoveIcon />}
         </span>
 
         {!isPic ? null : (

@@ -1,9 +1,7 @@
-/* .footerContainer { */
-/* position: absolute;
-  bottom: 0;
-  width: 80%;
-  height: auto; */
-/* } */
+.footerContainer {
+  margin-top: auto;
+  /* margin-top: 30%; */
+}
 
 .footerTextContainer {
   display: flex;
@@ -11,6 +9,86 @@
   align-items: center;
   width: 100%;
   height: 5rem;
-  color: black;
+  color: #1e1e1e;
   font-weight: 600;
+}
+
+.footerLinksContainer {
+  display: flex;
+  padding: 3rem;
+  background-color: white;
+  border-radius: 10px;
+  flex-direction: column;
+}
+
+.footerLinksPrimaryContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 3rem;
+}
+
+.footerLinksSingleContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.footerLinksSingleContainer h3 {
+  margin-bottom: 1rem;
+}
+
+.footerLinksSingleContainer a {
+  color: rgb(92, 92, 92);
+  text-decoration: none;
+  margin-bottom: 5px;
+  width: -moz-fit-content;
+  width: fit-content;
+}
+
+.footerLinksSingleContainer a:hover {
+  color: rgb(92, 92, 92);
+}
+
+.footerLinksSecondaryContainer {
+  display: flex;
+  justify-content: end;
+  padding: 10px;
+}
+
+.footerLinksImgContainer {
+  width: 10rem;
+  height: auto;
+  background-color: #1e1e1e;
+  padding: 15px 30px;
+  border-radius: 30px;
+  margin-right: 10px;
+}
+
+.footerLinksImgContainer:hover {
+  cursor: pointer;
+}
+
+.footerLinksSocialsContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  color: white;
+  background-color: #1e1e1e;
+  border-radius: 100%;
+  margin-right: 10px;
+}
+
+.footerLinksSocialsContainer:hover {
+  cursor: pointer;
+}
+
+.muiIcon {
+  transform: scale(1.5);
+}
+
+.footerHide {
+  display: none;
 }

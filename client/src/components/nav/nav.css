@@ -1,3 +1,14 @@
+.nav-link {
+  transition: none !important;
+}
+
+.navbar-collapse .nav-link:hover {
+  background-color: rgba(211, 211, 211, 0.313);
+  border-radius: 10px;
+  color: #1e1e1e;
+  font-weight: 400;
+}
+
 .navButton {
   margin: 0 !important;
 }
@@ -75,7 +86,7 @@
   border-radius: 10px;
   z-index: 9999;
   overflow: scroll;
-  box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.33);
+  /* box-shadow: 0px 5px 30px rgba(0, 0, 0, 0.33); */
 }
 
 .usersContainer::-webkit-scrollbar {
@@ -106,6 +117,7 @@
 .usersLink:hover {
   background-color: rgba(230, 230, 230, 0.8);
   cursor: pointer;
+  border-radius: 10px;
 }
 
 .usersLink img {
@@ -130,4 +142,69 @@
   padding-top: 4rem;
   color: lightgray;
   cursor: default;
+}
+
+.learnContainer {
+  margin-top: 0;
+  justify-content: left;
+  height: auto;
+  margin-top: 1rem;
+}
+
+.discoverContainer {
+  margin-top: 0;
+  justify-content: left;
+  height: auto;
+  margin-top: 1rem;
+}
+
+.usersLinkP {
+  color: #1e1e1e;
+  text-decoration: none;
+}
+
+.usersLinkP:hover {
+  color: #1e1e1e;
+  text-decoration: none;
+}
+
+.discoverVisible,
+.learnVisible {
+  margin-top: 0.8rem;
+  position: absolute;
+  z-index: 9999;
+}
+
+.discoverVisible,
+.learnVisible:hover {
+  cursor: default;
+}
+
+.test {
+  border: 1px solid red;
+}
+
+.nav-hide {
+  display: none !important;
+}
+
+.signUp {
+  color: white;
+  background-color: #1e1e1e !important;
+}
+
+.logIn {
+  color: #1e1e1e;
+  background-color: rgba(230, 230, 230, 0.8) !important;
+}
+
+.linksLoginSignup {
+  width: 9rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.linksLogout {
+  color: white;
+  background-image: linear-gradient(to bottom right, #e32c58, #ffb199);
 }
