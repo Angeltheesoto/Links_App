@@ -208,3 +208,7 @@
   color: white;
   background-image: linear-gradient(to bottom right, #e32c58, #ffb199);
 }
+
+.navbar {
+  border-radius: 0 0 30px 30px;
+}

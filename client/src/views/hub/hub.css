@@ -9,6 +9,12 @@ section {
   font-weight: 500;
 }
 
+h2 {
+  font-size: 3rem !important;
+}
+
+/* section 1 */
+
 .hubSectionOne {
   flex-direction: row;
 }
@@ -32,7 +38,6 @@ section {
 }
 
 .hubSectionOneContainer form {
-  /* border: 1px solid red; */
   display: flex;
   flex-direction: row;
 }
@@ -58,8 +63,31 @@ section {
   height: auto;
 }
 
-.sand {
+.hubLinks {
   color: white;
   padding: 1rem;
+}
+
+.pink {
   background-image: linear-gradient(to bottom right, #ea52e8, #eea8ed);
+}
+
+/* section 2 */
+.hubSectionTwo {
+  flex-direction: row-reverse;
+}
+
+/* section 6 */
+.hubSectionSixPrimary {
+  height: 47.5% !important;
+}
+
+/* section 7 */
+.hubSectionSevenPrimary {
+  width: 32%;
+}
+
+/* section 8 */
+.hubSectionEight {
+  min-height: 50vh;
 }
