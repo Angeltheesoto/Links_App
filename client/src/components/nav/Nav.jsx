@@ -5,6 +5,7 @@ import { AuthContext } from "../../context/AuthContext";
 import { logoutCall } from "../../apiCalls";
 import "./nav.css";
 import SearchIcon from "@material-ui/icons/Search";
+import GroupWorkIcon from "@material-ui/icons/GroupWork";
 import { useLocation } from "react-router-dom";
 
 function MyNavbar({ user, profilePictureData }) {
@@ -48,8 +49,19 @@ function MyNavbar({ user, profilePictureData }) {
         }
       >
         <Container>
-          <Link to="/" className="nav-link">
-            <Navbar.Brand>HUB</Navbar.Brand>
+          <Link to="/hub" className="nav-link">
+            <Navbar.Brand>
+              <GroupWorkIcon
+                style={{
+                  width: "3rem",
+                  height: "auto",
+                  color: "white",
+                  backgroundImage:
+                    "linear-gradient(to bottom right, #92fe9d, #00c9ff)",
+                  borderRadius: "10px",
+                }}
+              />
+            </Navbar.Brand>
           </Link>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">

@@ -1,7 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./hub.css";
+import FacebookIcon from "@material-ui/icons/Facebook";
+import InstagramIcon from "@material-ui/icons/Instagram";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import GroupWorkIcon from "@material-ui/icons/GroupWork";
 
 const Hub = () => {
+  let [showOutline, setShowOutline] = useState(false);
+  let [flipCardOne, setFlipCardOne] = useState(false);
+  let [flipCardTwo, setFlipCardTwo] = useState(false);
+  let [flipCardThree, setFlipCardThree] = useState(false);
+  let [flipCardFour, setFlipCardFour] = useState(false);
+
   return (
     <div className="hubContainer">
       <section className="hubSectionOne">
@@ -12,10 +22,23 @@ const Hub = () => {
             you share everything you create, curate and sell from your
             Instagram, TikTok, Twitter, YouTube and other social media profiles.
           </p>
-          <form>
-            <div className="hubSectionOneLabel">
-              <label>HUB/</label>
-              <input type="text" placeholder="yourname"></input>
+          <form className="d-flex flex-row align-items-center">
+            <div
+              className={
+                showOutline
+                  ? "hubSectionOneLinkOutlineGrow"
+                  : "hubSectionOneLinkOutlineShrink"
+              }
+            >
+              <div className="hubSectionOneLabel">
+                <label>HUB/</label>
+                <input
+                  type="text"
+                  placeholder="yourname"
+                  onFocus={() => setShowOutline(!showOutline)}
+                  onBlur={() => setShowOutline(!showOutline)}
+                ></input>
+              </div>
             </div>
             <div>
               <button type="submit" className="linksButton hubLinks pink">
@@ -24,13 +47,67 @@ const Hub = () => {
             </div>
           </form>
         </div>
-        <div className="hubSectionOneContainer">
-          <img src="/assets/phone.png" alt="phone" />
+        <div className="hubSectionOneContainer d-flex flex-row align-items-center justify-content-center hubRelativeContainer">
+          <div className="hubSectionOneHat">Hat image</div>
+          <div className="hubSectionOnePhone">
+            <div className="hubSectionOneProfile"></div>
+            <span>Avery Clothing</span>
+            <span>Utilitarian garments for the everyday</span>
+            <div className="h-50">
+              <p className="hubSectionOneLinks">Autumn Collection</p>
+              <p className="hubSectionOneLinks">Latest additons</p>
+              <p className="hubSectionOneLinks">Podcast</p>
+            </div>
+          </div>
+
+          <div className="hubSectionOneShopAll">
+            <p>Shop all</p>
+          </div>
+
+          <div className="hubSectionOneBrand">
+            <div>
+              <FacebookIcon />
+            </div>
+            <div>
+              <InstagramIcon />
+            </div>
+            <div>
+              <TwitterIcon />
+            </div>
+          </div>
         </div>
       </section>
       <section className="hubSectionTwo">
         <div className="d-flex flex-row align-items-center">
-          <div className="w-50">Image goes here</div>
+          {/* <div className="w-50">Image goes here</div> */}
+          <div className="hubSectionOneContainer d-flex flex-row align-items-center justify-content-center hubRelativeContainer h-100">
+            <div className="hubSectionOnePhone">
+              <div className="hubSectionOneProfile"></div>
+              <span>Avery Clothing</span>
+              <span>Utilitarian garments for the everyday</span>
+              <div className="h-50">
+                <p className="hubSectionOneLinks">Autumn Collection</p>
+                <p className="hubSectionOneLinks">Latest additons</p>
+                <p className="hubSectionOneLinks">Podcast</p>
+              </div>
+            </div>
+
+            <div className="hubSectionOneShopAllTwo">
+              <p>Shop all</p>
+            </div>
+
+            <div className="hubSectionOneBrandTwo">
+              <div>
+                <FacebookIcon />
+              </div>
+              <div>
+                <InstagramIcon />
+              </div>
+              <div>
+                <TwitterIcon />
+              </div>
+            </div>
+          </div>
           <div className="w-50">
             <h2 className="fw-bold mb-4">
               Create and customize your HUB in minutes
@@ -61,7 +138,22 @@ const Hub = () => {
               Get started for free
             </button>
           </div>
-          <div className="w-50">Image goes here</div>
+          <div className="w-50">
+            <div className="hubSectionThreeCatepillerContainer">
+              <div>
+                <div className="hubSectionThreeCatepiller">6</div>
+                <div className="hubSectionThreeCatepiller">5</div>
+                <div className="hubSectionThreeCatepiller">4</div>
+                <div className="hubSectionThreeCatepiller">3</div>
+                <div className="hubSectionThreeCatepiller">2</div>
+                <div className="hubSectionThreeCatepiller">1</div>
+              </div>
+              <p>
+                <GroupWorkIcon />
+                HUB/shopavery
+              </p>
+            </div>
+          </div>
         </div>
       </section>
       <section className="hubSectionFour">
@@ -79,13 +171,140 @@ const Hub = () => {
               Get started for free
             </button>
           </div>
-          <div className="w-50">Images flipping</div>
+          <div className="w-50">
+            <div className="hubSectionFourCardContainer">
+              <div class={`flip-card ${flipCardOne ? "flipping-card" : ""}`}>
+                <div
+                  class="flip-card-front"
+                  onClick={() => setFlipCardOne(!flipCardOne)}
+                >
+                  <p>Click to flip</p>
+                </div>
+
+                <div
+                  class="flip-card-back"
+                  onClick={() => setFlipCardOne(!flipCardOne)}
+                >
+                  <h1>John Doe</h1>
+                  <p>Architect & Engineer</p>
+                  <p>We love that guy</p>
+                </div>
+              </div>
+
+              <div class={`flip-card ${flipCardTwo ? "flipping-card" : ""}`}>
+                <div
+                  class="flip-card-front"
+                  onClick={() => setFlipCardTwo(!flipCardTwo)}
+                >
+                  <p>Click to flip</p>
+                </div>
+
+                <div
+                  class="flip-card-back"
+                  onClick={() => setFlipCardTwo(!flipCardTwo)}
+                >
+                  <h1>John Doe</h1>
+                </div>
+              </div>
+
+              <div class={`flip-card ${flipCardThree ? "flipping-card" : ""}`}>
+                <div
+                  class="flip-card-front"
+                  onClick={() => setFlipCardThree(!flipCardThree)}
+                >
+                  <p>Click to flip</p>
+                </div>
+
+                <div
+                  class="flip-card-back"
+                  onClick={() => setFlipCardThree(!flipCardThree)}
+                >
+                  <h1>John Doe</h1>
+                </div>
+              </div>
+
+              <div class={`flip-card ${flipCardFour ? "flipping-card" : ""}`}>
+                <div
+                  class="flip-card-front"
+                  onClick={() => setFlipCardFour(!flipCardFour)}
+                >
+                  <p>Click to flip</p>
+                </div>
+
+                <div
+                  class="flip-card-back"
+                  onClick={() => setFlipCardFour(!flipCardFour)}
+                >
+                  <h1>John Doe</h1>
+                  <p>Architect & Engineer</p>
+                  <p>We love that guy</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       <section className="hubSectionFive">
         <div className="d-flex flex-column align-items-center justify-content-center w-100 ">
-          <h2 className="fw-bold">The only link in bio trused by 35M+</h2>
-          <h2 className="text-primary fw-bold">!Text that changes!</h2>
+          <h2 className="fw-bold hubSectionFivePrimary">
+            The only link in bio trused by 35M+
+          </h2>
+          <div className="hubSectionFiveSlidingContainer">
+            <div className="hubSectionFiveSlidingTextContainer">
+              <h2 className="text-primary fw-bold">Text heading 1</h2>
+              <h2 className="text-primary fw-bold">Text heading 2</h2>
+              <h2 className="text-primary fw-bold">Text heading 3</h2>
+              <h2 className="text-primary fw-bold">Text heading 4</h2>
+            </div>
+          </div>
+          <div className="hubSectionFiveSlidingContainerTwo">
+            <div className="hubSectionFiveSlidingContainerForUsers">
+              {" "}
+              <div className="hubSectionFiveSlidingUserContainer">
+                Person 1
+              </div>{" "}
+              <div className="hubSectionFiveSlidingUserContainer">Person 2</div>
+              <div className="hubSectionFiveSlidingUserContainer">Person 3</div>
+              <div className="hubSectionFiveSlidingUserContainer">Person 4</div>
+              <div className="hubSectionFiveSlidingUserContainer">Person 5</div>
+              <div className="hubSectionFiveSlidingUserContainer">Person 6</div>
+            </div>
+            <div className="hubSectionFiveSlidingContainerForUsers">
+              {" "}
+              <div className="hubSectionFiveSlidingUserContainer">
+                Person 1
+              </div>{" "}
+              <div className="hubSectionFiveSlidingUserContainer">Person 2</div>
+              <div className="hubSectionFiveSlidingUserContainer">Person 3</div>
+              <div className="hubSectionFiveSlidingUserContainer">Person 4</div>
+              <div className="hubSectionFiveSlidingUserContainer">Person 5</div>
+              <div className="hubSectionFiveSlidingUserContainer">Person 6</div>
+            </div>
+          </div>
+          {/* <div class="marquee">
+            <div class="marquee--inner">
+              <span>
+                <div class="orb"></div>
+                <div class="orb red"></div>
+                <div class="orb yellow"></div>
+                <div class="orb blue"></div>
+                <div class="orb orange"></div>
+                <div class="orb purple"></div>
+                <div class="orb green"></div>
+                <div class="orb"></div>
+              </span>
+              <span>
+                <div class="orb"></div>
+                <div class="orb red"></div>
+                <div class="orb yellow"></div>
+                <div class="orb blue"></div>
+                <div class="orb orange"></div>
+                <div class="orb purple"></div>
+                <div class="orb green"></div>
+                <div class="orb"></div>
+              </span>
+            </div>
+          </div> */}
         </div>
       </section>
       <section className="hubSectionSix">
